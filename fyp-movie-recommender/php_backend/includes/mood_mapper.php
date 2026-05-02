@@ -30,7 +30,15 @@ if (!function_exists('get_genre_id_for_mood')) {
 
         // --- 2. DATABASE PROTOCOL (SECONDARY) ---
         // New: Check dynamic weighted mappings defined in admin panel
-        global $pdo; 
+        global $pdo;
+
+        // Ensure PDO is available even if not globalized correctly
+        if (!isset($pdo) && file_exists(__DIR__ . '/../database/connection.php')) {
+            try {
+                @include_once __DIR__ . '/../database/connection.php';
+            } catch (Throwable $t) {}
+        }
+
         if (isset($pdo)) {
             try {
                 // Fetch the highest weighted genre for this mood
