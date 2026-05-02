@@ -281,7 +281,7 @@ if (empty($marquee_movies)) {
     </section>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-5 bg-black border-top border-dark text-center">
+    <footer class="footer mt-auto py-5 text-center">
         <div class="container">
             <h5 class="fw-bold mb-3" style="color: var(--text-white); letter-spacing: -0.5px;">Mood<span style="color: var(--accent-red);">AI</span>.</h5>
             <p class="small mb-4 animate-reveal" style="color: var(--text-white); opacity: 0.8;">Redefining movie discovery through the lens of high-fidelity neural intelligence and human-centric emotional mapping.</p>
@@ -424,11 +424,9 @@ if (empty($marquee_movies)) {
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(0, 0, 0, 0.98)';
-                navbar.style.padding = '0.8rem 0';
+                navbar.classList.add('navbar-scrolled');
             } else {
-                navbar.style.background = 'rgba(0, 0, 0, 0.9)';
-                navbar.style.padding = '1.2rem 0';
+                navbar.classList.remove('navbar-scrolled');
             }
         });
 
