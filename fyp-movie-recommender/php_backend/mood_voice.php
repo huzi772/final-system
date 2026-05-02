@@ -19,11 +19,37 @@ if (!$user_id) {
 
 <main class="container pb-5 fade-in-section">
 
-    <!-- Interface Header -->
-    <header class="hero-section-premium mb-5" data-aos="fade-down">
-        <span class="interface-tag">Tool: Voice Mood Detector</span>
-        <h1 class="display-4 fw-800">Mood by Voice</h1>
-    </header>
+    <!-- Hero Section (AI Command Center) -->
+    <section class="hero-section dashboard-hero-section mb-4">
+        <div class="container px-0">
+            <div class="hero-card" data-aos="zoom-in">
+                <div class="row align-items-center p-4">
+                    <div class="col-lg-5 text-center position-relative mb-5 mb-lg-0" data-aos="fade-right">
+                        <!-- Decorative small icons -->
+                        <i class="bi bi-mic-fill decorative-icon icon-1"></i>
+                        <i class="bi bi-soundwave decorative-icon icon-2"></i>
+                        <i class="bi bi-cpu-fill decorative-icon icon-3"></i>
+                        <i class="bi bi-broadcast-pin decorative-icon icon-4"></i>
+
+                        <!-- Large Main Tech Icon -->
+                        <div class="large-hero-icon">
+                            <i class="bi bi-mic"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 hero-content ps-lg-5" data-aos="fade-left">
+                        <span class="section-tag hero-tag">System: Vocal Frequency Unit</span>
+                        <h1 class="hero-title-text">Mood by Voice Analysis.</h1>
+                        <p class="lead hero-lead mb-5">
+                            Our AI will analyze the frequency and patterns of your voice to identify your current emotional state with high precision.
+                        </p>
+                        <div class="d-flex">
+                            <a href="dashboard.php" class="btn btn-hero-outline btn-lg">Back to Center</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="row g-4 align-items-stretch">
         
