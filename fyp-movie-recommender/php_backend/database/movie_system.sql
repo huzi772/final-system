@@ -68,7 +68,7 @@ INSERT IGNORE INTO `mood_genre_mapping` (`mood_id`, `mood_name`, `genre_id`, `ge
 -- Insert Default Settings
 INSERT IGNORE INTO `system_settings` (`setting_key`, `setting_value`) VALUES
 ('site_name', 'MoodAI'),
-('tmdb_api_key', '6bef3d72fb99db38620ed01b065e0d9e');
+('tmdb_api_key', ''); -- Enter your TMDB API key here
 
 -- 4. Cached Movies Table (Fallback System)
 CREATE TABLE IF NOT EXISTS `cached_movies` (

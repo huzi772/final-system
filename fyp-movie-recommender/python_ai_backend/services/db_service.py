@@ -62,6 +62,7 @@ def query_mapping_from_db(mood_name):
     if not connection:
         return None
 
+    cursor = None
     try:
         cursor = connection.cursor(dictionary=True)
         query = "SELECT genre_id FROM mood_genre_mapping WHERE mood_name = %s ORDER BY weight DESC LIMIT 1"
@@ -72,8 +73,9 @@ def query_mapping_from_db(mood_name):
         print(f"Error querying database: {e}")
         return None
     finally:
-        if connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection.is_connected():
             connection.close()
 
 def query_all_mappings_from_db():
@@ -84,6 +86,7 @@ def query_all_mappings_from_db():
     if not connection:
         return None
 
+    cursor = None
     try:
         cursor = connection.cursor(dictionary=True)
         query = "SELECT mood_name, genre_id FROM mood_genre_mapping ORDER BY weight DESC"
@@ -100,6 +103,7 @@ def query_all_mappings_from_db():
         print(f"Error querying all mappings from database: {e}")
         return None
     finally:
-        if connection.is_connected():
+        if cursor:
             cursor.close()
+        if connection.is_connected():
             connection.close()

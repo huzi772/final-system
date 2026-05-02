@@ -1,13 +1,13 @@
 # mood_to_genre.py
 # Maps detected moods to TMDB Genre IDs
 try:
-    from services.db_service import query_mapping_from_db
+    from services.db_service import query_mapping_from_db, query_all_mappings_from_db
 except ImportError:
     # Fallback for direct script execution or testing
     import sys
     import os
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from services.db_service import query_mapping_from_db
+    from services.db_service import query_mapping_from_db, query_all_mappings_from_db
 
 # SECONDARY FALLBACK MAP
 # Used if Database is unreachable or mood not found in DB
