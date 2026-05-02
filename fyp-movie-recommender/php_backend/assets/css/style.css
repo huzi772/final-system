@@ -39,6 +39,8 @@ main {
 .navbar {
     background: rgba(0, 0, 0, 0.9);
     border-bottom: 2px solid var(--accent-red) !important;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
     box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
     padding: 1rem 0;
     backdrop-filter: blur(10px);
@@ -701,6 +703,8 @@ main {
 /* --- Global Footer --- */
 .footer {
     border-top: 2px solid var(--accent-red) !important;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
     box-shadow: 0 -4px 20px rgba(255, 0, 0, 0.3);
     background: #000;
 }
