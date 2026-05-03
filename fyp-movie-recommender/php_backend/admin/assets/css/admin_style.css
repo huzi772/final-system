@@ -102,6 +102,11 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
+.bg-primary-admin {
+    background-color: var(--admin-purple) !important;
+    color: #0d0d0d !important;
+}
+
 /* --- DASHBOARD CARDS (Global) --- */
 .dashboard-card {
     background: var(--admin-card-bg);
