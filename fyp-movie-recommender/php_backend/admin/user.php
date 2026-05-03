@@ -76,7 +76,7 @@ if (empty($users) && empty($search) && empty($status_filter)) {
             <p class="text-muted mb-0">Manage system access and monitor user activity.</p>
         </div>
         <div class="breadcrumb-admin">
-            <span class="opacity-50">Admin</span> / <span class="fw-700 text-danger">Users</span>
+            <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">Users</span>
         </div>
     </div>
 
@@ -84,30 +84,30 @@ if (empty($users) && empty($search) && empty($status_filter)) {
     <div class="row g-4 mb-5">
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
             <div class="dashboard-card text-center py-4 h-100">
-                <div class="text-danger mb-2" style="font-size: 2rem;"><i class="bi bi-people-fill"></i></div>
-                <div class="fw-800 h3 mb-0"><?php echo number_format($stats['total']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50">Total Operatives</div>
+                <div class="text-purple mb-2" style="font-size: 2rem;"><i class="bi bi-people-fill"></i></div>
+                <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['total']); ?></div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Total Operatives</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
             <div class="dashboard-card text-center py-4 h-100">
                 <div class="text-success mb-2" style="font-size: 2rem;"><i class="bi bi-shield-check"></i></div>
-                <div class="fw-800 h3 mb-0"><?php echo number_format($stats['active']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50">Active Access</div>
+                <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['active']); ?></div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Active Access</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
             <div class="dashboard-card text-center py-4 h-100">
                 <div class="text-secondary mb-2" style="font-size: 2rem;"><i class="bi bi-shield-slash"></i></div>
-                <div class="fw-800 h3 mb-0"><?php echo number_format($stats['banned']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50">Banned Units</div>
+                <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['banned']); ?></div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Banned Units</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-            <div class="dashboard-card text-center py-4 h-100" style="border: 2px solid var(--admin-red);">
-                <div class="text-danger mb-2" style="font-size: 2rem;"><i class="bi bi-lightning-fill"></i></div>
-                <div class="fw-800 h3 mb-0"><?php echo number_format($stats['new_today']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50">New Detections Today</div>
+            <div class="dashboard-card text-center py-4 h-100" style="border: 2px solid var(--admin-purple);">
+                <div class="text-purple mb-2" style="font-size: 2rem;"><i class="bi bi-lightning-fill"></i></div>
+                <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['new_today']); ?></div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">New Detections Today</div>
             </div>
         </div>
     </div>
@@ -117,19 +117,19 @@ if (empty($users) && empty($search) && empty($status_filter)) {
         <form action="user.php" method="GET" class="row g-3">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" name="search" class="form-control border-start-0 ps-0" placeholder="Search by username or email..." value="<?php echo htmlspecialchars($search); ?>">
+                    <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control bg-dark border-secondary border-start-0 ps-0 text-white" placeholder="Search by username or email..." value="<?php echo htmlspecialchars($search); ?>">
                 </div>
             </div>
             <div class="col-md-3">
-                <select name="status" class="form-select">
+                <select name="status" class="form-select bg-dark border-secondary text-white">
                     <option value="">All Statuses</option>
                     <option value="active" <?php echo $status_filter == 'active' ? 'selected' : ''; ?>>Active</option>
                     <option value="banned" <?php echo $status_filter == 'banned' ? 'selected' : ''; ?>>Banned</option>
                 </select>
             </div>
             <div class="col-md-3 d-grid">
-                <button type="submit" class="btn btn-danger fw-700">Apply Filters</button>
+                <button type="submit" class="btn btn-primary-admin fw-700">Apply Filters</button>
             </div>
         </form>
     </div>
@@ -160,24 +160,24 @@ if (empty($users) && empty($search) && empty($status_filter)) {
                                         <div class="user-avatar-small me-3">
                                             <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
                                         </div>
-                                        <span class="fw-800"><?php echo htmlspecialchars($user['username']); ?></span>
+                                        <span class="fw-800 text-white"><?php echo htmlspecialchars($user['username']); ?></span>
                                     </div>
                                 </td>
-                                <td class="text-muted"><?php echo htmlspecialchars($user['email']); ?></td>
-                                <td><?php echo date('M d, Y', strtotime($user['created_at'])); ?></td>
+                                <td class="text-white-50"><?php echo htmlspecialchars($user['email']); ?></td>
+                                <td class="text-white-50"><?php echo date('M d, Y', strtotime($user['created_at'])); ?></td>
                                 <td>
                                     <?php if ($user['status'] == 'active'): ?>
-                                        <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-700">ACTIVE</span>
+                                        <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-700 border border-success">ACTIVE</span>
                                     <?php else: ?>
-                                        <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-700">BANNED</span>
+                                        <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-700 border border-danger">BANNED</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-end">
                                     <div class="btn-group">
-                                        <a href="user_details.php?id=<?php echo $user['user_id']; ?>" class="btn btn-light btn-sm" title="View Profile">
+                                        <a href="user_details.php?id=<?php echo $user['user_id']; ?>" class="btn btn-dark border-secondary btn-sm text-purple" title="View Profile">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <button type="button" class="btn btn-light btn-sm text-danger ms-2" onclick="toggleStatus(<?php echo $user['user_id']; ?>, '<?php echo $user['status']; ?>')" title="Toggle Status">
+                                        <button type="button" class="btn btn-dark border-secondary btn-sm text-danger ms-2" onclick="toggleStatus(<?php echo $user['user_id']; ?>, '<?php echo $user['status']; ?>')" title="Toggle Status">
                                             <i class="bi bi-shield-<?php echo $user['status'] == 'active' ? 'slash' : 'check'; ?>"></i>
                                         </button>
                                     </div>
@@ -190,25 +190,5 @@ if (empty($users) && empty($search) && empty($status_filter)) {
         </div>
     </div>
 </main>
-
-<style>
-.user-avatar-small {
-    width: 35px;
-    height: 35px;
-    background: var(--admin-red);
-    color: #fff;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.9rem;
-}
-.breadcrumb-admin {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-</style>
 
 <?php require_once 'include/footer.php'; ?>

@@ -12,7 +12,7 @@ if (!isset($_SESSION['admin_id'])) {
         echo json_encode(['success' => false, 'message' => 'Unauthorized access.']);
         exit();
     }
-    
+
     // Otherwise redirect to login
     header("Location: login.php");
     exit();

@@ -1,251 +1,175 @@
-/* admin_login.css - Split-Screen Light Theme with Red Accents */
-
+/* assets/css/admin_login.css */
 :root {
-    --admin-bg: #ffffff;
-    --admin-side-bg: #fdf2f2; /* Very light red for visual side */
-    --admin-red: #ff0000;
-    --admin-red-hover: #cc0000;
-    --admin-text: #1a1a1a;
-    --admin-text-muted: #666666;
-    --admin-border: #eeeeee;
-    --admin-input-bg: #ffffff;
+    --admin-purple: #a890fe;
+    --admin-bg: #0d0d0d;
+    --admin-text-primary: #ffffff;
+    --admin-text-secondary: #a0a0a0;
+    --admin-font-header: 'Michroma', sans-serif;
+    --admin-font-tech: 'Space Mono', monospace;
+    --admin-font-main: 'Inter', sans-serif;
 }
 
-/* Fix for browser autofill background color */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-}
-
-body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
+body {
     background-color: var(--admin-bg);
-    color: var(--admin-text);
+    color: var(--admin-text-primary);
+    font-family: var(--admin-font-main);
+    margin: 0;
     overflow: hidden;
 }
 
-/* --- Restricted Access Banner --- */
 .restricted-banner {
-    background-color: var(--admin-red);
-    color: white;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 10px 0;
+    background: var(--admin-purple);
+    color: #000;
     text-align: center;
+    padding: 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 100;
+    font-family: var(--admin-font-tech);
 }
 
-/* --- Split Container --- */
 .split-login-container {
     display: flex;
     height: 100vh;
-    width: 100%;
-    padding-top: 36px; /* Space for banner */
 }
 
-/* --- Left: Form Side --- */
 .login-form-side {
     flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 0 50px;
-    background-color: var(--admin-bg);
+    justify-content: center;
+    padding: 40px;
+    background: var(--admin-bg);
+    z-index: 10;
 }
 
 .form-wrapper {
     width: 100%;
-    max-width: 440px;
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    max-width: 400px;
 }
 
 .admin-logo {
-    font-weight: 800;
+    font-family: var(--admin-font-header);
     font-size: 1.5rem;
-    margin-bottom: 5px;
-    letter-spacing: -0.5px;
+    color: var(--admin-purple);
+    margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
 .admin-logo span {
-    color: var(--admin-red);
+    color: #fff;
+    opacity: 0.5;
 }
 
 .admin-login-title {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 5px;
+    font-family: var(--admin-font-header);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 .admin-login-subtitle {
-    color: var(--admin-text-muted);
-    font-size: 0.95rem;
+    font-family: var(--admin-font-tech);
+    color: var(--admin-text-secondary);
     margin-bottom: 40px;
+    font-size: 0.8rem;
 }
 
-/* --- Right: Visual Side --- */
-.login-visual-side {
-    flex: 1;
-    background-color: var(--admin-side-bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.lottie-container {
-    width: 80%;
-    max-width: 500px;
-}
-
-/* --- Form Elements --- */
 .admin-form-label {
-    font-size: 0.75rem;
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-weight: 700;
-    color: var(--admin-text);
     margin-bottom: 10px;
-    display: block;
+    color: var(--admin-text-secondary);
+    font-family: var(--admin-font-tech);
 }
 
 .admin-input-group {
-    background: var(--admin-input-bg);
-    border: 1px solid var(--admin-border);
-    border-radius: 8px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    transition: all 0.3s;
     position: relative;
-    overflow: hidden;
-}
-
-.admin-input-group:focus-within {
-    border-color: var(--admin-red);
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.05);
+    margin-bottom: 25px;
 }
 
 .admin-input-group i {
-    padding-left: 20px;
-    color: var(--admin-red);
-    font-size: 1rem;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--admin-purple);
 }
 
 .admin-input-group input {
-    background: transparent;
-    border: none;
-    color: var(--admin-text);
-    padding: 16px 20px;
     width: 100%;
-    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px 20px 15px 55px;
+    color: #fff;
     font-size: 0.95rem;
+    transition: 0.3s;
+    font-family: var(--admin-font-tech);
 }
 
-.toggle-password {
-    background: transparent;
-    border: none;
-    color: #999;
-    padding: 0 20px;
-    cursor: pointer;
-}
-
-.toggle-password:hover {
-    color: var(--admin-red);
+.admin-input-group input:focus {
+    border-color: var(--admin-purple);
+    outline: none;
+    box-shadow: 0 0 15px rgba(168, 144, 254, 0.2);
 }
 
 .btn-admin-login {
     width: 100%;
-    background-color: var(--admin-red);
-    color: #ffffff;
+    background: var(--admin-purple);
+    color: #000;
     border: none;
     padding: 18px;
-    font-weight: 700;
+    border-radius: 12px;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border-radius: 8px;
-    transition: all 0.3s;
-    margin-top: 15px;
+    letter-spacing: 1px;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
-    font-size: 1rem;
+    transition: 0.3s;
+    margin-top: 10px;
+    font-family: var(--admin-font-header);
+    font-size: 0.9rem;
 }
 
 .btn-admin-login:hover {
-    background-color: var(--admin-red-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+    background: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
 }
 
-/* --- Scanning Animation --- */
-.scan-overlay {
+.login-visual-side {
+    flex: 1.2;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.login-visual-side::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: scan 2s infinite;
-    display: none;
+    background: radial-gradient(circle at center, rgba(168, 144, 254, 0.1) 0%, transparent 70%);
 }
 
-@keyframes scan {
-    from { left: -100%; }
-    to { left: 100%; }
+.lottie-container {
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
 }
 
-.scanning .scan-overlay {
-    display: block;
-}
-
-.scanning .btn-text {
-    visibility: hidden;
-}
-
-.scanning::after {
-    content: 'AUTHENTICATING...';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-}
-
-/* --- Failed Shake --- */
-.shake {
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-@keyframes shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0); }
-  20%, 80% { transform: translate3d(2px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-  40%, 60% { transform: translate3d(4px, 0, 0); }
-}
-
-/* --- Responsive --- */
 @media (max-width: 992px) {
-    .login-visual-side {
-        display: none;
-    }
-    .login-form-side {
-        padding: 0 20px;
-    }
-    body {
-        overflow: auto;
-    }
+    .login-visual-side { display: none; }
 }
