@@ -43,9 +43,9 @@ if (isset($pdo)) {
 $recent_activity = [];
 if (isset($pdo)) {
     try {
-        $stmt = $pdo->query("SELECT h.mood, h.input_type, h.detected_at, u.username 
-                             FROM user_mood_history h 
-                             JOIN users u ON h.user_id = u.user_id 
+        $stmt = $pdo->query("SELECT h.mood, h.input_type, h.detected_at, u.username
+                             FROM user_mood_history h
+                             JOIN users u ON h.user_id = u.user_id
                              ORDER BY h.detected_at DESC LIMIT 6");
         $recent_activity = $stmt->fetchAll();
     } catch (Exception $e) {}
@@ -160,7 +160,7 @@ if (empty($method_data)) {
                 <canvas id="moodChart" height="150"></canvas>
             </div>
         </div>
-        
+
         <!-- System Health -->
         <div class="col-lg-4" data-aos="fade-left">
             <div class="dashboard-card h-100">
@@ -219,7 +219,7 @@ if (empty($method_data)) {
                                 <?php foreach ($recent_activity as $row): ?>
                                     <tr>
                                         <td class="fw-bold"><?php echo htmlspecialchars($row['username']); ?></td>
-                                        <td><span class="text-uppercase" style="letter-spacing: 1px; font-weight: 700; color: var(--admin-red);"><?php echo htmlspecialchars($row['mood']); ?></span></td>
+                                        <td><span class="text-uppercase" style="letter-spacing: 1px; font-weight: 700; color: var(--admin-purple);"><?php echo htmlspecialchars($row['mood']); ?></span></td>
                                         <td><span class="method-badge badge-<?php echo $row['input_type']; ?>"><?php echo $row['input_type']; ?></span></td>
                                         <td class="text-muted"><?php echo date('M d, H:i', strtotime($row['detected_at'])); ?></td>
                                     </tr>
@@ -245,16 +245,32 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'Detections',
                 data: <?php echo json_encode(array_column($mood_data, 'count')); ?>,
-                backgroundColor: '#ff0000',
+                backgroundColor: '#a890fe',
                 borderRadius: 5
             }]
         },
         options: {
             responsive: true,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#1a1a1a',
+                    titleColor: '#a890fe',
+                    bodyColor: '#fff',
+                    borderColor: '#a890fe',
+                    borderWidth: 1
+                }
+            },
             scales: {
-                y: { beginAtZero: true, grid: { display: false } },
-                x: { grid: { display: false } }
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#a0a0a0' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#a0a0a0' }
+                }
             }
         }
     });
@@ -267,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: <?php echo json_encode(array_column($method_data, 'input_type')); ?>,
             datasets: [{
                 data: <?php echo json_encode(array_column($method_data, 'count')); ?>,
-                backgroundColor: ['#1976d2', '#7b1fa2', '#e65100'],
+                backgroundColor: ['#a890fe', '#b388ff', '#ff9800'],
                 borderWidth: 0
             }]
         },
@@ -275,7 +291,14 @@ document.addEventListener('DOMContentLoaded', function() {
             responsive: true,
             cutout: '70%',
             plugins: {
-                legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20 } }
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        color: '#a0a0a0'
+                    }
+                }
             }
         }
     });

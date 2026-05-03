@@ -63,12 +63,12 @@ if (!$user) {
 <main class="container pb-5">
     <!-- Header with Back Button -->
     <div class="d-flex align-items-center mb-5" data-aos="fade-right">
-        <a href="user.php" class="btn btn-light rounded-circle me-3 p-2" style="width: 45px; height: 45px;">
-            <i class="bi bi-arrow-left" style="font-size: 1.2rem;"></i>
+        <a href="user.php" class="back-btn-neural me-4">
+            <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
         </a>
         <div>
-            <h2 class="fw-800 mb-0">Operative Profile</h2>
-            <p class="text-muted mb-0">Diving into the digital shadow of <span class="text-danger fw-700"><?php echo htmlspecialchars($user['username']); ?></span></p>
+            <h2 class="mb-0">Operative Profile</h2>
+            <p class="text-muted mb-0 tech-label">Neural ID: <span class="text-purple"><?php echo htmlspecialchars($user['username']); ?></span></p>
         </div>
     </div>
 
@@ -92,28 +92,28 @@ if (!$user) {
 
                 <div class="row g-2 text-start mb-4">
                     <div class="col-6">
-                        <div class="bg-light p-3 rounded-4">
-                            <div class="small opacity-50 fw-700 text-uppercase" style="font-size: 0.65rem;">Neural Scans</div>
-                            <div class="fw-800 h4 mb-0"><?php echo count($history); ?></div>
+                        <div class="stats-box p-3 rounded-4">
+                            <div class="tech-label" style="font-size: 0.65rem;">Neural Scans</div>
+                            <div class="tech-value h4 mb-0"><?php echo count($history); ?></div>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="bg-light p-3 rounded-4">
-                            <div class="small opacity-50 fw-700 text-uppercase" style="font-size: 0.65rem;">Fav Records</div>
-                            <div class="fw-800 h4 mb-0"><?php echo count($favorites); ?></div>
+                        <div class="stats-box p-3 rounded-4">
+                            <div class="tech-label" style="font-size: 0.65rem;">Fav Records</div>
+                            <div class="tech-value h4 mb-0"><?php echo count($favorites); ?></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="border-top pt-4 text-start">
-                    <p class="small text-muted mb-1">Joined Date</p>
-                    <p class="fw-700 mb-3"><?php echo date('F d, Y @ H:i', strtotime($user['created_at'])); ?></p>
+                <div class="border-top border-secondary pt-4 text-start">
+                    <p class="small text-muted mb-1 tech-label">Registration Date</p>
+                    <p class="tech-value mb-3"><?php echo date('Y-m-d H:i', strtotime($user['created_at'])); ?></p>
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button class="btn btn-outline-danger fw-700 py-2 rounded-pill" onclick="handleToggle(<?php echo $user_id; ?>, '<?php echo $user['status']; ?>')">
+                    <button class="btn btn-outline-danger fw-700 py-2 rounded-pill tech-label" onclick="handleToggle(<?php echo $user_id; ?>, '<?php echo $user['status']; ?>')">
                         <i class="bi bi-shield-<?php echo $user['status'] == 'active' ? 'slash' : 'check'; ?> me-2"></i>
-                        <?php echo $user['status'] == 'active' ? 'Ban Operative' : 'Restore Access'; ?>
+                        <?php echo $user['status'] == 'active' ? 'Terminate Access' : 'Restore Access'; ?>
                     </button>
                 </div>
             </div>
@@ -155,18 +155,18 @@ if (!$user) {
                 <h5 class="card-title-admin mb-4"><i class="bi bi-heart-fill"></i> Cinematic Favorites</h5>
                 <div class="row g-3 favorites-scroll-container">
                     <?php if (empty($favorites)): ?>
-                        <div class="col-12 text-center py-4 text-muted">No favorite records found.</div>
+                        <div class="col-12 text-center py-4 text-muted tech-label">No favorite records found.</div>
                     <?php else: ?>
                         <?php foreach ($favorites as $fav): ?>
                             <div class="col-md-6">
-                                <div class="bg-light p-3 rounded-4 d-flex align-items-center">
+                                <div class="fav-card-mini p-3 d-flex align-items-center">
                                     <div class="fav-poster-mini me-3">
                                         <img src="<?php echo htmlspecialchars($fav['movie_poster']); ?>" alt="Poster" class="img-fluid rounded-3">
                                     </div>
                                     <div class="flex-grow-1 overflow-hidden">
-                                        <h6 class="fw-800 text-truncate mb-0"><?php echo htmlspecialchars($fav['movie_title']); ?></h6>
-                                        <div class="badge bg-danger-subtle text-danger small mt-1"><?php echo htmlspecialchars($fav['mood_tag']); ?></div>
-                                        <div class="text-muted x-small mt-1" style="font-size: 0.65rem;"><?php echo date('M d, Y', strtotime($fav['saved_at'])); ?></div>
+                                        <h6 class="text-truncate mb-1" style="font-family: var(--admin-font-main); text-transform: none;"><?php echo htmlspecialchars($fav['movie_title']); ?></h6>
+                                        <div class="badge bg-primary-admin text-dark x-small"><?php echo htmlspecialchars($fav['mood_tag']); ?></div>
+                                        <div class="text-muted x-small mt-1 tech-label" style="font-size: 0.65rem;"><?php echo date('Y-m-d', strtotime($fav['saved_at'])); ?></div>
                                     </div>
                                 </div>
                             </div>

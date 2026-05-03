@@ -26,12 +26,12 @@ $mood_filter = $_GET['mood'] ?? '';
 $logs = [];
 if ($pdo) {
     try {
-        $query = "SELECT h.*, u.username 
-                  FROM user_mood_history h 
-                  JOIN users u ON h.user_id = u.user_id 
+        $query = "SELECT h.*, u.username
+                  FROM user_mood_history h
+                  JOIN users u ON h.user_id = u.user_id
                   WHERE 1=1";
         $params = [];
-        
+
         if ($search) {
             $query .= " AND (u.username LIKE :search OR h.mood LIKE :search)";
             $params['search'] = "%$search%";
@@ -44,7 +44,7 @@ if ($pdo) {
             $query .= " AND h.mood = :mood";
             $params['mood'] = $mood_filter;
         }
-        
+
         $query .= " ORDER BY h.detected_at DESC LIMIT 100";
         $stmt = $pdo->prepare($query);
         $stmt->execute($params);
@@ -93,7 +93,7 @@ if (empty($available_moods)) {
             <p class="text-muted mb-0">Real-time monitoring of neural mood detections across the network.</p>
         </div>
         <div class="breadcrumb-admin">
-            <span class="opacity-50">Admin</span> / <span class="fw-700 text-danger">System Logs</span>
+            <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">System Logs</span>
         </div>
     </div>
 
@@ -102,12 +102,12 @@ if (empty($available_moods)) {
         <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
             <div class="dashboard-card py-3 px-4 h-100">
                 <div class="d-flex align-items-center">
-                    <div class="rounded-circle bg-danger-subtle p-3 me-3">
-                        <i class="bi bi-activity text-danger h4 mb-0"></i>
+                    <div class="rounded-circle bg-purple-subtle p-3 me-3">
+                        <i class="bi bi-activity text-purple h4 mb-0"></i>
                     </div>
                     <div>
-                        <div class="small text-uppercase fw-700 opacity-50">Total Scans</div>
-                        <div class="fw-800 h4 mb-0"><?php echo number_format($stats['total']); ?></div>
+                        <div class="small text-uppercase fw-700 opacity-50 text-white-50">Total Scans</div>
+                        <div class="fw-800 h4 mb-0 text-white"><?php echo number_format($stats['total']); ?></div>
                     </div>
                 </div>
             </div>
@@ -119,8 +119,8 @@ if (empty($available_moods)) {
                         <i class="bi bi-graph-up-arrow text-primary h4 mb-0"></i>
                     </div>
                     <div>
-                        <div class="small text-uppercase fw-700 opacity-50">Peak Mood</div>
-                        <div class="fw-800 h4 mb-0 text-uppercase"><?php echo htmlspecialchars($stats['top_mood']); ?></div>
+                        <div class="small text-uppercase fw-700 opacity-50 text-white-50">Peak Mood</div>
+                        <div class="fw-800 h4 mb-0 text-uppercase text-white"><?php echo htmlspecialchars($stats['top_mood']); ?></div>
                     </div>
                 </div>
             </div>
@@ -132,8 +132,8 @@ if (empty($available_moods)) {
                         <i class="bi bi-person-check text-success h4 mb-0"></i>
                     </div>
                     <div>
-                        <div class="small text-uppercase fw-700 opacity-50">Top Operative</div>
-                        <div class="fw-800 h4 mb-0"><?php echo htmlspecialchars($stats['most_active']); ?></div>
+                        <div class="small text-uppercase fw-700 opacity-50 text-white-50">Top Operative</div>
+                        <div class="fw-800 h4 mb-0 text-white"><?php echo htmlspecialchars($stats['most_active']); ?></div>
                     </div>
                 </div>
             </div>
@@ -145,12 +145,12 @@ if (empty($available_moods)) {
         <form action="logs.php" method="GET" class="row g-3">
             <div class="col-md-4">
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" name="search" class="form-control border-start-0 ps-0" placeholder="Search by operative or mood..." value="<?php echo htmlspecialchars($search); ?>">
+                    <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" name="search" class="form-control bg-dark border-secondary border-start-0 ps-0 text-white" placeholder="Search by operative or mood..." value="<?php echo htmlspecialchars($search); ?>">
                 </div>
             </div>
             <div class="col-md-3">
-                <select name="method" class="form-select">
+                <select name="method" class="form-select bg-dark border-secondary text-white">
                     <option value="">All Methods</option>
                     <option value="text" <?php echo $method_filter == 'text' ? 'selected' : ''; ?>>Text</option>
                     <option value="voice" <?php echo $method_filter == 'voice' ? 'selected' : ''; ?>>Voice</option>
@@ -158,7 +158,7 @@ if (empty($available_moods)) {
                 </select>
             </div>
             <div class="col-md-3">
-                <select name="mood" class="form-select">
+                <select name="mood" class="form-select bg-dark border-secondary text-white">
                     <option value="">All Moods</option>
                     <?php foreach ($available_moods as $m): ?>
                         <option value="<?php echo htmlspecialchars($m); ?>" <?php echo $mood_filter == $m ? 'selected' : ''; ?>>
@@ -168,7 +168,7 @@ if (empty($available_moods)) {
                 </select>
             </div>
             <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-danger fw-700">Filter</button>
+                <button type="submit" class="btn btn-primary-admin fw-700">Filter</button>
             </div>
         </form>
     </div>
@@ -195,12 +195,12 @@ if (empty($available_moods)) {
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <i class="bi bi-person-circle text-danger me-2"></i>
-                                        <span class="fw-800"><?php echo htmlspecialchars($log['username']); ?></span>
+                                        <i class="bi bi-person-circle text-purple me-2"></i>
+                                        <span class="fw-800 text-white"><?php echo htmlspecialchars($log['username']); ?></span>
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="text-uppercase fw-800" style="letter-spacing: 1px; color: var(--admin-red);">
+                                    <span class="text-uppercase fw-800" style="letter-spacing: 1px; color: var(--admin-purple);">
                                         <?php echo htmlspecialchars($log['mood']); ?>
                                     </span>
                                 </td>
@@ -209,8 +209,8 @@ if (empty($available_moods)) {
                                         <?php echo $log['input_type']; ?>
                                     </span>
                                 </td>
-                                <td class="text-muted">
-                                    <i class="bi bi-clock-history me-1"></i>
+                                <td class="text-white-50">
+                                    <i class="bi bi-clock-history me-1 text-purple"></i>
                                     <?php echo date('M d, Y @ H:i:s', strtotime($log['detected_at'])); ?>
                                 </td>
                             </tr>
