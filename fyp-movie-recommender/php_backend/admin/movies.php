@@ -92,11 +92,11 @@ $tmdb_genres = [
 <main class="container pb-5">
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
-            <h2 class="fw-800 mb-0"><i class="bi bi-cpu-fill text-purple me-2"></i>Neural Mapping Engine</h2>
-            <p class="text-muted mb-0">Configure weights and multi-genre links for neural mood synchronization.</p>
+            <h2 class="fw-800 mb-0 text-white"><i class="bi bi-cpu-fill text-purple me-2"></i>Movie Data Engine</h2>
+            <p class="mb-0" style="color: #949494;">Connect moods to movie genres and set their strength.</p>
         </div>
         <div class="breadcrumb-admin">
-            <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">Mapping Engine</span>
+            <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">Movie Engine</span>
         </div>
     </div>
 
@@ -113,17 +113,17 @@ $tmdb_genres = [
         <div class="col-lg-4">
             <!-- Add New Mood -->
             <div class="dashboard-card mb-4" data-aos="fade-right">
-                <h5 class="card-title-admin mb-3"><i class="bi bi-plus-circle text-purple"></i> Initialize New Mood</h5>
+                <h5 class="card-title-admin mb-3"><i class="bi bi-plus-circle text-purple"></i> Add New Mood</h5>
                 <form action="movies.php" method="POST" class="d-flex gap-2">
                     <input type="hidden" name="action" value="add_mood">
-                    <input type="text" name="mood_name" class="form-control rounded-pill bg-dark border-secondary text-white" placeholder="e.g. Melancholic" required>
+                    <input type="text" name="mood_name" class="form-control rounded-pill bg-dark border-secondary text-white" placeholder="e.g. Happy" required>
                     <button type="submit" class="btn btn-primary-admin rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-plus fs-4"></i></button>
                 </form>
             </div>
 
             <!-- Mood List -->
             <div class="dashboard-card" data-aos="fade-right" data-aos-delay="100">
-                <h5 class="card-title-admin mb-4"><i class="bi bi-list-ul"></i> Neural Moods</h5>
+                <h5 class="card-title-admin mb-4"><i class="bi bi-list-ul"></i> System Moods</h5>
                 <div class="list-group list-group-flush history-scroll-container" style="max-height: 400px;">
                     <?php foreach ($moods as $m): ?>
                         <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 px-0 py-3 border-bottom border-secondary">
@@ -142,7 +142,7 @@ $tmdb_genres = [
 
             <!-- Linker Editor -->
             <div class="dashboard-card mb-4" data-aos="fade-up">
-                <h5 class="card-title-admin mb-4"><i class="bi bi-link-45deg"></i> Dynamic Linker & Weight Config</h5>
+                <h5 class="card-title-admin mb-4"><i class="bi bi-link-45deg"></i> Link Moods to Genres</h5>
                 <form action="movies.php" method="POST" id="mappingForm">
                     <input type="hidden" name="action" value="save_mapping">
                     <div class="row g-3">
@@ -164,7 +164,7 @@ $tmdb_genres = [
                             <input type="hidden" name="genre_name" id="genreNameInput" value="Action">
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label small fw-700 opacity-50 text-white">WEIGHT %</label>
+                            <label class="form-label small fw-700 opacity-50 text-white">STRENGTH %</label>
                             <input type="number" name="weight" class="form-control rounded-3 bg-dark border-secondary text-white" value="100" min="1" max="100">
                         </div>
                         <div class="col-md-2 d-flex align-items-end">
@@ -176,7 +176,7 @@ $tmdb_genres = [
                 <div class="mt-4 table-responsive favorites-scroll-container" style="max-height: 300px;">
                     <table class="table admin-table table-sm">
                         <thead class="sticky-top bg-dark">
-                            <tr><th>Mood</th><th>Genre</th><th>Weight</th><th class="text-end">Actions</th></tr>
+                            <tr><th>Mood</th><th>Genre</th><th>Strength</th><th class="text-end">Actions</th></tr>
                         </thead>
                         <tbody>
                             <?php foreach ($mappings as $row): ?>

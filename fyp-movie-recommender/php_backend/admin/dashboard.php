@@ -108,10 +108,10 @@ if (empty($method_data)) {
         </div>
         <div class="system-status-pill mb-3">
             <span class="status-dot"></span>
-            SYSTEM STATUS: ACTIVE
+            SYSTEM STATUS: ONLINE
         </div>
         <h1 class="hero-welcome">Welcome back, <?php echo htmlspecialchars($admin_username); ?>.</h1>
-        <p class="hero-tagline">MoodAI Administrative Neural Link Established.</p>
+        <p class="hero-tagline">Everything is running smoothly.</p>
         <div class="hero-visual-divider"></div>
     </section>
 
@@ -123,7 +123,7 @@ if (empty($method_data)) {
                     <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
                     <div class="stat-content">
                         <div class="stat-value"><?php echo number_format($total_users); ?></div>
-                        <div class="stat-label">Total Operatives</div>
+                        <div class="stat-label">Total Users</div>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@ if (empty($method_data)) {
                     <div class="stat-icon"><i class="bi bi-cpu-fill"></i></div>
                     <div class="stat-content">
                         <div class="stat-value"><?php echo number_format($total_moods); ?></div>
-                        <div class="stat-label">Neural Mappings</div>
+                        <div class="stat-label">Mood Scans</div>
                     </div>
                 </div>
             </div>
@@ -204,10 +204,10 @@ if (empty($method_data)) {
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th>Operative</th>
+                                <th>User</th>
                                 <th>Detected Mood</th>
                                 <th>Method</th>
-                                <th>Timestamp</th>
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>

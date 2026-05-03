@@ -96,21 +96,26 @@ body {
     margin-bottom: 25px;
 }
 
-.admin-input-group i {
+/* Fix Icon Placement */
+.admin-input-group > i {
     position: absolute;
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--admin-purple);
+    z-index: 5;
+    pointer-events: none;
+    font-size: 1.1rem;
 }
 
+/* Theme-consistent Inputs */
 .admin-input-group input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(168, 144, 254, 0.2);
     border-radius: 12px;
-    padding: 15px 20px 15px 55px;
-    color: #fff;
+    padding: 15px 50px 15px 55px;
+    color: #fff !important;
     font-size: 0.95rem;
     transition: 0.3s;
     font-family: var(--admin-font-tech);
@@ -119,9 +124,40 @@ body {
 .admin-input-group input:focus {
     border-color: var(--admin-purple);
     outline: none;
-    box-shadow: 0 0 15px rgba(168, 144, 254, 0.2);
+    box-shadow: 0 0 15px rgba(168, 144, 254, 0.3);
+    background: rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Autofill Fixes */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 50px #1a1a1a inset !important;
+    -webkit-text-fill-color: white !important;
+    border-color: var(--admin-purple) !important;
+}
+
+/* Password Toggle Button Styling */
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--admin-text-secondary);
+    cursor: pointer;
+    z-index: 5;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: var(--admin-purple);
+}
+
+/* Button Styling */
 .btn-admin-login {
     width: 100%;
     background: var(--admin-purple);
@@ -146,6 +182,29 @@ body {
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
 }
 
+/* Scanning Animation Overlay */
+.scan-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 2;
+}
+
+.btn-admin-login.scanning .scan-overlay {
+    display: block;
+    animation: scanningLine 1.5s linear infinite;
+}
+
+@keyframes scanningLine {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(50px); }
+}
+
+/* Visual Side */
 .login-visual-side {
     flex: 1.2;
     background: #000;
@@ -172,4 +231,13 @@ body {
 
 @media (max-width: 992px) {
     .login-visual-side { display: none; }
+}
+
+/* Remove any accidental square dots (often from hidden checkboxes or list markers) */
+* {
+    outline: none !important;
+}
+
+form::after {
+    display: none !important;
 }

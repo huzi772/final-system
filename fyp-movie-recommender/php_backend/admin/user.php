@@ -72,8 +72,8 @@ if (empty($users) && empty($search) && empty($status_filter)) {
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
-            <h2 class="fw-800 mb-0">Operative Directory</h2>
-            <p class="text-muted mb-0">Manage system access and monitor user activity.</p>
+            <h2 class="fw-800 mb-0 text-white">User Registry</h2>
+            <p class="mb-0" style="color: #949494;">Manage system access and monitor user activity.</p>
         </div>
         <div class="breadcrumb-admin">
             <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">Users</span>
@@ -86,21 +86,21 @@ if (empty($users) && empty($search) && empty($status_filter)) {
             <div class="dashboard-card text-center py-4 h-100">
                 <div class="text-purple mb-2" style="font-size: 2rem;"><i class="bi bi-people-fill"></i></div>
                 <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['total']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Total Operatives</div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Total Users</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
             <div class="dashboard-card text-center py-4 h-100">
                 <div class="text-success mb-2" style="font-size: 2rem;"><i class="bi bi-shield-check"></i></div>
                 <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['active']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Active Access</div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Active Users</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
             <div class="dashboard-card text-center py-4 h-100">
                 <div class="text-secondary mb-2" style="font-size: 2rem;"><i class="bi bi-shield-slash"></i></div>
                 <div class="fw-800 h3 mb-0 text-white"><?php echo number_format($stats['banned']); ?></div>
-                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Banned Units</div>
+                <div class="small text-uppercase fw-700 opacity-50 text-white-50">Banned Users</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
@@ -140,9 +140,9 @@ if (empty($users) && empty($search) && empty($status_filter)) {
             <table class="table admin-table mb-0">
                 <thead>
                     <tr>
-                        <th>Operative</th>
-                        <th>Email Identity</th>
-                        <th>Registration Date</th>
+                        <th>User</th>
+                        <th>Email Address</th>
+                        <th>Joined Date</th>
                         <th>Status</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -150,7 +150,7 @@ if (empty($users) && empty($search) && empty($status_filter)) {
                 <tbody>
                     <?php if (empty($users)): ?>
                         <tr>
-                            <td colspan="5" class="text-center py-5 text-muted">No operatives found matching your criteria.</td>
+                            <td colspan="5" class="text-center py-5 text-muted">No users found matching your criteria.</td>
                         </tr>
                     <?php else: ?>
                         <?php foreach ($users as $user): ?>
