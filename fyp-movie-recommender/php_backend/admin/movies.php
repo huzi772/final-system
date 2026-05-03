@@ -174,7 +174,7 @@ $tmdb_genres = [
                 </form>
 
                 <div class="mt-4 table-responsive favorites-scroll-container" style="max-height: 300px;">
-                    <table class="table admin-table table-sm">
+                    <table class="table admin-table">
                         <thead class="sticky-top bg-dark">
                             <tr><th>Mood</th><th>Genre</th><th>Strength</th><th class="text-end">Actions</th></tr>
                         </thead>

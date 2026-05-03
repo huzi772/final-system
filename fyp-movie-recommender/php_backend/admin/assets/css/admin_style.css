@@ -263,23 +263,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 /* --- TABLES --- */
 .admin-table {
     background-color: transparent !important;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse !important; /* Critical for stable column alignment */
     width: 100%;
     border: none !important;
+    margin-bottom: 0;
 }
 
 .admin-table thead th {
-    background-color: #0d0d0d !important; /* Match background for sticky header */
+    background-color: #0d0d0d !important;
     border-bottom: 2px solid var(--admin-purple) !important;
     text-transform: uppercase;
     font-size: 0.75rem;
     font-family: var(--admin-font-tech);
     letter-spacing: 2px;
-    padding: 20px;
+    padding: 20px 15px !important;
     color: var(--admin-purple) !important;
     white-space: nowrap;
     border-top: none !important;
+    vertical-align: middle;
 }
 
 /* Uniform Alignment for First and Last Columns */
@@ -307,70 +308,49 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .admin-table tbody td {
     background-color: #141414 !important;
-    padding: 20px;
+    padding: 20px 15px !important;
     vertical-align: middle;
     font-size: 0.9rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     color: var(--admin-text-secondary) !important;
     font-family: var(--admin-font-tech);
-    position: relative; /* Required for side lines */
+    position: relative;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
 .admin-table tbody tr {
-    position: relative;
     cursor: default;
+    transition: all 0.3s ease;
 }
 
 .admin-table tbody tr:hover td {
     background-color: #1a1a1a !important;
     color: #ffffff !important;
+    z-index: 10;
 }
 
 /* --- THE 4 SOLID GLOWING LINES EFFECT --- */
-/* Top and Bottom Lines */
-.admin-table tbody tr::before,
-.admin-table tbody tr::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--admin-purple);
-    box-shadow: 0 0 15px var(--admin-purple);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 20;
-    pointer-events: none;
+/* Re-engineered for perfect alignment using box-shadow instead of TR-relative positioning */
+
+.admin-table tbody tr:hover td {
+    /* Top and Bottom Glowing Lines via Box Shadow */
+    box-shadow: inset 0 2px 0 0 var(--admin-purple),
+                inset 0 -2px 0 0 var(--admin-purple),
+                0 0 15px rgba(168, 144, 254, 0.1);
 }
 
-.admin-table tbody tr::before { top: 0; }
-.admin-table tbody tr::after { bottom: 0; }
-
-/* Side Lines (on first and last cell) */
-.admin-table tbody tr td:first-child::before,
-.admin-table tbody tr td:last-child::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--admin-purple);
-    box-shadow: 0 0 15px var(--admin-purple);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 21;
+/* Left side glow on first cell */
+.admin-table tbody tr:hover td:first-child {
+    box-shadow: inset 2px 2px 0 0 var(--admin-purple),
+                inset 0 -2px 0 0 var(--admin-purple),
+                0 0 15px rgba(168, 144, 254, 0.1);
 }
 
-.admin-table tbody tr td:first-child::before { left: 0; }
-.admin-table tbody tr td:last-child::after { right: 0; }
-
-/* Show All 4 Lines on Hover */
-.admin-table tbody tr:hover::before,
-.admin-table tbody tr:hover::after,
-.admin-table tbody tr:hover td:first-child::before,
-.admin-table tbody tr:hover td:last-child::after {
-    opacity: 1;
+/* Right side glow on last cell */
+.admin-table tbody tr:hover td:last-child {
+    box-shadow: inset -2px 2px 0 0 var(--admin-purple),
+                inset 0 -2px 0 0 var(--admin-purple),
+                0 0 15px rgba(168, 144, 254, 0.1);
 }
 
 /* Global Input Fixes */
