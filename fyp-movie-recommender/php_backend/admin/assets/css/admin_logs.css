@@ -9,11 +9,6 @@
     text-shadow: 0 0 5px rgba(168, 144, 254, 0.3);
 }
 
-/* Technical Log Styles */
-.admin-table td .fw-800.text-white {
-    font-family: var(--admin-font-tech);
-    letter-spacing: 0.5px;
-}
 
 /* Method Badges */
 .method-badge {

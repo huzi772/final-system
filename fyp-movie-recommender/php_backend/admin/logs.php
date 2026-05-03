@@ -176,8 +176,8 @@ if (empty($available_moods)) {
     <!-- Logs Table -->
     <div class="dashboard-card" data-aos="fade-up">
         <div class="table-responsive history-scroll-container" style="max-height: 600px;">
-            <table class="table admin-table mb-0">
-                <thead style="position: sticky; top: 0; z-index: 10;">
+            <table class="table admin-table">
+                <thead class="sticky-top bg-dark" style="z-index: 10;">
                     <tr>
                         <th>User</th>
                         <th>Detected Mood</th>
