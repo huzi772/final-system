@@ -2,21 +2,6 @@
 // admin/settings.php
 require_once 'include/header.php';
 
-// Safe database connection
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
-
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $pdo) {
     $site_name = $_POST['site_name'] ?? 'MoodAI';

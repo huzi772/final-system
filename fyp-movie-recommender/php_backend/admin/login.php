@@ -8,24 +8,7 @@ if (isset($_SESSION['admin_id'])) {
     exit();
 }
 
-require_once '../includes/config.php';
-
-// Check if database connection is available and attempt to include it
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    // Instead of including and risking die(), we manually try to connect here
-    // based on config to keep the script alive even if DB is down.
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
+require_once "../database/connection.php";
 
 $error_message = '';
 

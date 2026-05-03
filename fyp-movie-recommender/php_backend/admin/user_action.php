@@ -1,19 +1,10 @@
 <?php
 // admin/user_actions.php
 require_once 'include/auth_check.php';
-require_once '../includes/config.php';
+require_once "../database/connection.php";
 
-// Safe database connection
-$pdo = null;
-try {
-    $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch (Throwable $t) {
-    die("Action failed: System connection error.");
+if (!$pdo) {
+    die("Action failed: System connection error. " . ($db_error ?? ""));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

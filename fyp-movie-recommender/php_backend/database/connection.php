@@ -2,6 +2,9 @@
 // Ensure config.php is included first
 require_once __DIR__ . '/../includes/config.php';
 
+$pdo = null;
+$db_error = null;
+
 try {
     // Create a new PDO instance (Database Management: Storing user profiles [cite: 40])
     $pdo = new PDO(
@@ -15,7 +18,7 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    // In a real application, you should log this error and show a user-friendly message
-    die("Database connection failed: " . $e->getMessage());
+    $pdo = null;
+    $db_error = $e->getMessage();
 }
 ?>

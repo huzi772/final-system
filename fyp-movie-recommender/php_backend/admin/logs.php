@@ -2,21 +2,6 @@
 // admin/logs.php
 require_once 'include/header.php';
 
-// Safe database connection attempt
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
-
 // Search and Filter Logic
 $search = $_GET['search'] ?? '';
 $method_filter = $_GET['method'] ?? '';
@@ -52,15 +37,6 @@ if ($pdo) {
     } catch (Exception $e) {}
 }
 
-if (empty($logs) && empty($search) && empty($method_filter) && empty($mood_filter)) {
-    // Mock data for UI
-    $logs = [
-        ['username' => 'Jules_01', 'mood' => 'Happy', 'input_type' => 'text', 'detected_at' => date('Y-m-d H:i:s')],
-        ['username' => 'Neo_Matrix', 'mood' => 'Excited', 'input_type' => 'voice', 'detected_at' => date('Y-m-d H:i:s', strtotime('-1 hour'))],
-        ['username' => 'Sarah_C', 'mood' => 'Sad', 'input_type' => 'face', 'detected_at' => date('Y-m-d H:i:s', strtotime('-2 hours'))],
-        ['username' => 'Alex_R', 'mood' => 'Angry', 'input_type' => 'text', 'detected_at' => date('Y-m-d H:i:s', strtotime('-5 hours'))],
-    ];
-}
 
 // --- ANALYTICS ---
 $stats = ['total' => 0, 'top_mood' => 'N/A', 'most_active' => 'N/A'];
@@ -87,6 +63,18 @@ if (empty($available_moods)) {
 
 <main class="container pb-5">
     <!-- Header Section -->
+    <?php if (!$pdo): ?>
+        <div class="alert alert-danger rounded-4 mb-4 border-2 shadow-sm" role="alert" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545; color: #fff;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-danger"></i>
+                <div>
+                    <h5 class="alert-heading fw-800 mb-1">DATABASE OFFLINE</h5>
+                    <p class="mb-0 small opacity-75">The central neural database is unreachable. System activity logs are not being synchronized. Error: <?php echo htmlspecialchars($db_error ?? 'Unknown connection error'); ?></p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
             <h2 class="fw-800 mb-0 text-white">System Activity Logs</h2>
