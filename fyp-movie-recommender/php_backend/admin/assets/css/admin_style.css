@@ -23,12 +23,31 @@
     letter-spacing: -0.01em;
 }
 
+/* Fix for muted text visibility in admin */
+.admin-body .text-muted,
+.admin-body .text-white-50 {
+    color: var(--admin-text-secondary) !important;
+}
+
+.tech-label {
+    font-family: var(--admin-font-tech);
+    color: var(--admin-text-secondary) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tech-value {
+    font-family: var(--admin-font-tech);
+    color: #fff !important;
+}
+
 /* --- GLOBAL TYPOGRAPHY --- */
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-family: var(--admin-font-header);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 400;
+    color: #fff;
 }
 
 /* --- HEADER ANIMATION & ROUNDED --- */
@@ -276,9 +295,48 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #141414 !important;
 }
 
+.admin-table tbody tr {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
 .admin-table tbody tr:hover td {
     background-color: #1a1a1a !important;
     color: #ffffff !important;
+}
+
+.admin-table tbody tr {
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+}
+
+.admin-table tbody tr:hover {
+    border-left: 3px solid var(--admin-purple);
+    border-right: 3px solid var(--admin-purple);
+    box-shadow: 0 0 20px rgba(168, 144, 254, 0.1);
+    transform: scale(1.002);
+}
+
+/* The "4 lines" bracket effect for rows */
+.admin-table tbody tr::before,
+.admin-table tbody tr::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--admin-purple), transparent, var(--admin-purple));
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.admin-table tbody tr::before { top: 0; }
+.admin-table tbody tr::after { bottom: 0; }
+
+.admin-table tbody tr:hover::before,
+.admin-table tbody tr:hover::after {
+    opacity: 1;
 }
 
 /* Global Input Fixes */
@@ -286,6 +344,17 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #1a1a1a !important;
     border: 1px solid rgba(168, 144, 254, 0.2) !important;
     color: white !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 0.9rem;
+}
+
+.input-group-text {
+    background-color: #1a1a1a !important;
+    border: 1px solid rgba(168, 144, 254, 0.2) !important;
+    color: var(--admin-purple) !important;
 }
 
 .form-control:focus, .form-select:focus {

@@ -67,8 +67,8 @@ if (!$user) {
             <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
         </a>
         <div>
-            <h2 class="mb-0">Operative Profile</h2>
-            <p class="text-muted mb-0 tech-label">Neural ID: <span class="text-purple"><?php echo htmlspecialchars($user['username']); ?></span></p>
+            <h2 class="mb-0 text-white">Operative Profile</h2>
+            <p class="mb-0 tech-label">Neural ID: <span class="text-purple"><?php echo htmlspecialchars($user['username']); ?></span></p>
         </div>
     </div>
 
@@ -155,7 +155,7 @@ if (!$user) {
                 <h5 class="card-title-admin mb-4"><i class="bi bi-heart-fill"></i> Cinematic Favorites</h5>
                 <div class="row g-3 favorites-scroll-container">
                     <?php if (empty($favorites)): ?>
-                        <div class="col-12 text-center py-4 text-muted tech-label">No favorite records found.</div>
+                        <div class="col-12 text-center py-4 tech-label" style="color: var(--admin-text-secondary) !important;">No favorite records found.</div>
                     <?php else: ?>
                         <?php foreach ($favorites as $fav): ?>
                             <div class="col-md-6">
