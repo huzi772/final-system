@@ -56,8 +56,8 @@ $current_api_key = $settings['tmdb_api_key'] ?? TMDB_API_KEY;
 <main class="container pb-5">
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
-            <h2 class="fw-800 mb-0"><i class="bi bi-sliders text-purple me-2"></i>Global System Settings</h2>
-            <p class="text-muted mb-0">Configure core platform parameters and API credentials.</p>
+            <h2 class="fw-800 mb-0 text-white"><i class="bi bi-sliders text-purple me-2"></i>Global System Settings</h2>
+            <p class="mb-0" style="color: var(--admin-text-secondary) !important;">Configure core platform parameters and API credentials.</p>
         </div>
         <div class="breadcrumb-admin">
             <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">Settings</span>
