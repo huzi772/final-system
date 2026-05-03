@@ -51,14 +51,9 @@
     letter-spacing: -1px;
 }
 
-/* Table Row Hover Glow */
+/* Table Row Hover Glow - Handled in global style, keeping this for page specific overrides if needed */
 .admin-table tbody tr {
     transition: all 0.3s ease;
-}
-
-.admin-table tbody tr:hover td {
-    background: rgba(168, 144, 254, 0.03) !important;
-    box-shadow: inset 4px 0 0 var(--admin-purple);
 }
 
 /* SEARCH INPUT STYLING */
