@@ -237,9 +237,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- TABLES --- */
+.admin-table {
+    background-color: #141414 !important;
+    color: #e0e0e0 !important;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid rgba(168, 144, 254, 0.1);
+}
+
 .admin-table thead th {
-    background-color: rgba(168, 144, 254, 0.05);
-    border-bottom: 1px solid var(--admin-purple);
+    background-color: #1a1a1a !important;
+    border-bottom: 2px solid var(--admin-purple) !important;
     text-transform: uppercase;
     font-size: 0.75rem;
     font-family: var(--admin-font-tech);
@@ -249,16 +258,44 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .admin-table tbody td {
+    background-color: #141414 !important;
     padding: 20px 15px;
     vertical-align: middle;
     font-size: 0.9rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    color: var(--admin-text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #949494 !important;
     font-family: var(--admin-font-tech);
 }
 
-.admin-table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+.admin-table tbody tr {
+    background-color: #141414 !important;
+}
+
+.admin-table tbody tr:hover td {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+/* Global Input Fixes */
+.form-control, .form-select {
+    background-color: #1a1a1a !important;
+    border: 1px solid rgba(168, 144, 254, 0.2) !important;
+    color: white !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #1a1a1a !important;
+    border-color: var(--admin-purple) !important;
+    box-shadow: 0 0 10px rgba(168, 144, 254, 0.3) !important;
+    color: white !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+    -webkit-text-fill-color: white !important;
 }
 
 /* --- BADGES --- */

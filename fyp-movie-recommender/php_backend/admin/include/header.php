@@ -71,7 +71,7 @@ $admin_username = $_SESSION['admin_username'] ?? 'Admin';
                         <a class="nav-link <?php echo ($current_page == 'user' || $current_page == 'user_details') ? 'active' : ''; ?>" href="user.php">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo $current_page == 'logs' ? 'active' : ''; ?>" href="logs.php">System Logs</a>
+                        <a class="nav-link <?php echo $current_page == 'logs' ? 'active' : ''; ?>" href="logs.php">Logs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $current_page == 'movies' ? 'active' : ''; ?>" href="movies.php">Movies</a>

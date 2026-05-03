@@ -89,8 +89,8 @@ if (empty($available_moods)) {
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
-            <h2 class="fw-800 mb-0">System Activity Logs</h2>
-            <p class="text-muted mb-0">Real-time monitoring of neural mood detections across the network.</p>
+            <h2 class="fw-800 mb-0 text-white">System Activity Logs</h2>
+            <p class="mb-0" style="color: #949494;">Check real-time mood scans and user activity.</p>
         </div>
         <div class="breadcrumb-admin">
             <span class="opacity-50">Admin</span> / <span class="fw-700 text-purple">System Logs</span>
@@ -132,7 +132,7 @@ if (empty($available_moods)) {
                         <i class="bi bi-person-check text-success h4 mb-0"></i>
                     </div>
                     <div>
-                        <div class="small text-uppercase fw-700 opacity-50 text-white-50">Top Operative</div>
+                        <div class="small text-uppercase fw-700 opacity-50 text-white-50">Top User</div>
                         <div class="fw-800 h4 mb-0 text-white"><?php echo htmlspecialchars($stats['most_active']); ?></div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ if (empty($available_moods)) {
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text bg-dark border-secondary border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                    <input type="text" name="search" class="form-control bg-dark border-secondary border-start-0 ps-0 text-white" placeholder="Search by operative or mood..." value="<?php echo htmlspecialchars($search); ?>">
+                    <input type="text" name="search" class="form-control bg-dark border-secondary border-start-0 ps-0 text-white" placeholder="Search by user or mood..." value="<?php echo htmlspecialchars($search); ?>">
                 </div>
             </div>
             <div class="col-md-3">
@@ -179,10 +179,10 @@ if (empty($available_moods)) {
             <table class="table admin-table mb-0">
                 <thead style="position: sticky; top: 0; z-index: 10;">
                     <tr>
-                        <th>Operative</th>
+                        <th>User</th>
                         <th>Detected Mood</th>
                         <th>Method</th>
-                        <th>Detection Timestamp</th>
+                        <th>Detection Time</th>
                     </tr>
                 </thead>
                 <tbody>
