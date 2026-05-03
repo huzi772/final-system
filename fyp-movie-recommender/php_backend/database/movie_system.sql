@@ -21,6 +21,55 @@ CREATE TABLE IF NOT EXISTS `user_mood_history` (
   FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 5. Mood Definitions Table
+CREATE TABLE IF NOT EXISTS `mood_definitions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mood_name` varchar(50) NOT NULL UNIQUE,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 6. Mood-to-Genre Mapping Table
+CREATE TABLE IF NOT EXISTS `mood_genre_mapping` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mood_id` int(11) NOT NULL,
+  `mood_name` varchar(50) NOT NULL,
+  `genre_id` int(11) NOT NULL,
+  `genre_name` varchar(50) NOT NULL,
+  `weight` int(11) DEFAULT 100,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mood_genre_unique` (`mood_id`, `genre_id`),
+  FOREIGN KEY (`mood_id`) REFERENCES `mood_definitions`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 7. System Settings Table
+CREATE TABLE IF NOT EXISTS `system_settings` (
+  `setting_key` varchar(50) NOT NULL,
+  `setting_value` text DEFAULT NULL,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`setting_key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert Initial Moods
+INSERT IGNORE INTO `mood_definitions` (`mood_name`) VALUES
+('Happy'), ('Sad'), ('Angry'), ('Excited'), ('Anxious'), ('Relaxed'), ('Neutral');
+
+-- Insert Initial Mappings
+INSERT IGNORE INTO `mood_genre_mapping` (`mood_id`, `mood_name`, `genre_id`, `genre_name`, `weight`) VALUES
+(1, 'Happy', 35, 'Comedy', 100),
+(2, 'Sad', 18, 'Drama', 100),
+(3, 'Angry', 28, 'Action', 100),
+(4, 'Excited', 10751, 'Family', 100),
+(5, 'Anxious', 53, 'Thriller', 100),
+(6, 'Relaxed', 10749, 'Romance', 100),
+(7, 'Neutral', 10752, 'War', 100);
+
+-- Insert Default Settings
+INSERT IGNORE INTO `system_settings` (`setting_key`, `setting_value`) VALUES
+('site_name', 'MoodAI'),
+('tmdb_api_key', ''); -- Enter your TMDB API key here
+
 -- 4. Cached Movies Table (Fallback System)
 CREATE TABLE IF NOT EXISTS `cached_movies` (
   `tmdb_id` int(11) NOT NULL,

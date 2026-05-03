@@ -22,6 +22,6 @@ try {
 define('SITE_NAME', $dynamic_settings['site_name'] ?? 'MoodAI');
 
 // TMDB API Configuration
-define('TMDB_API_KEY', $dynamic_settings['tmdb_api_key'] ?? '6bef3d72fb99db38620ed01b065e0d9e');
+define('TMDB_API_KEY', $dynamic_settings['tmdb_api_key'] ?? '');
 define('TMDB_BASE_URL', 'https://api.themoviedb.org/3/');
 ?>

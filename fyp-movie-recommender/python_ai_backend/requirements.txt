@@ -9,3 +9,4 @@ numpy
 opencv-python-headless
 deepface
 requests
+mysql-connector-python
