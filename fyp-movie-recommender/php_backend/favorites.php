@@ -27,10 +27,11 @@ try {
 <main class="container pb-5 fade-in-section">
 
     <!-- Hero Section (Sync with Index Page Style) -->
-    <section class="hero-section mb-4">
-        <div class="hero-card" data-aos="zoom-in">
-            <div class="row align-items-center p-5">
-                <div class="col-lg-5 text-center position-relative mb-5 mb-lg-0" data-aos="fade-right">
+    <section class="hero-section dashboard-hero-section mb-4">
+        <div class="container px-0">
+            <div class="hero-card" data-aos="zoom-in">
+                <div class="row align-items-center p-4">
+                    <div class="col-lg-5 text-center position-relative mb-5 mb-lg-0" data-aos="fade-right">
                     <!-- Decorative small icons -->
                     <i class="bi bi-heart-fill decorative-icon icon-1"></i>
                     <i class="bi bi-star-fill decorative-icon icon-2"></i>

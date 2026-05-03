@@ -1,7 +1,7 @@
 <?php
 // PHP file for site footer, included at the end of every page.
 ?>
-    <footer class="footer mt-auto py-5 bg-black border-top border-dark text-center">
+    <footer class="footer mt-auto py-5 text-center">
         <div class="container">
             <h5 class="fw-bold mb-3" style="color: var(--text-white); letter-spacing: -0.5px;">Mood<span style="color: var(--accent-red);">AI</span>.</h5>
             <p class="small mb-4 animate-reveal" style="color: var(--text-white); opacity: 0.8;">Redefining movie discovery through the lens of high-fidelity neural intelligence and human-centric emotional mapping.</p>
@@ -23,6 +23,16 @@
                 easing: 'ease-out-cubic'
             });
         }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
     </script>
     </body>
 </html>

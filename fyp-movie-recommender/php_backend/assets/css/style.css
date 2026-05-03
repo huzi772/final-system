@@ -38,11 +38,19 @@ main {
 /* --- Global Navbar --- */
 .navbar {
     background: rgba(0, 0, 0, 0.9);
-    border-bottom: var(--border-thin);
-    padding: 1rem 0;
+    border-bottom: 2px solid var(--accent-red) !important;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    box-shadow: 0 4px 20px rgba(255, 0, 0, 0.3);
+    padding: 1.2rem 0;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     z-index: 1050; /* Ensure navbar is always on top */
+}
+
+.navbar-scrolled {
+    background: rgba(0, 0, 0, 0.98) !important;
+    padding: 0.8rem 0 !important;
 }
 
 .navbar-brand {
@@ -660,4 +668,48 @@ main {
 .hero-card:hover .btn-hero-outline:hover {
     background: var(--accent-red);
     border-color: var(--accent-red);
+}
+
+/* --- Hero Section Overrides (Large Scale v2) --- */
+.dashboard-hero-section {
+    padding: 60px 0 !important;
+    margin-top: 0 !important;
+}
+
+.dashboard-hero-section .hero-card {
+    border-radius: 50px;
+}
+
+.dashboard-hero-section .hero-title-text {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-hero-section .hero-lead {
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem !important;
+}
+
+.dashboard-hero-section .large-hero-icon {
+    font-size: 9.5rem;
+}
+
+.dashboard-hero-section .btn-lg {
+    padding: 14px 34px;
+    font-size: 1rem;
+}
+
+.dashboard-hero-section .hero-tag {
+    font-size: 0.85rem;
+    padding: 5px 15px;
+    margin-bottom: 1.2rem;
+}
+
+/* --- Global Footer --- */
+.footer {
+    border-top: 2px solid var(--accent-red) !important;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    box-shadow: 0 -4px 20px rgba(255, 0, 0, 0.3);
+    background: #000;
 }
