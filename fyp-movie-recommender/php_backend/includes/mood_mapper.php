@@ -3,33 +3,14 @@
  * mood_mapper.php - Centralized Mood-to-Genre Mapping Protocol
  *
  * Provides a unified way to map detected moods to TMDB Genre IDs.
- * Always attempts to query the Python AI service first to ensure the
- * AI's logic is the source of truth, with a local fallback.
+ * Priority: 1. Database (Admin Settings), 2. AI Service Sync, 3. Local JSON Fallback.
  */
 
 if (!function_exists('get_genre_id_for_mood')) {
     function get_genre_id_for_mood($mood) {
-        $python_api_url = 'http://127.0.0.1:5000/genre?mood=' . urlencode($mood);
 
-        // --- 1. ATTEMPT AI SYNC (PRIMARY) ---
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $python_api_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Quick timeout for seamless fallback
-
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($http_code === 200 && $response) {
-            $data = json_decode($response, true);
-            if (isset($data['genre_id'])) {
-                return (int)$data['genre_id'];
-            }
-        }
-
-        // --- 2. DATABASE PROTOCOL (SECONDARY) ---
-        // New: Check dynamic weighted mappings defined in admin panel
+        // --- 1. DATABASE PROTOCOL (PRIMARY) ---
+        // Check dynamic weighted mappings defined in admin panel first
         global $pdo;
 
         // Ensure PDO is available even if not globalized correctly
@@ -47,6 +28,26 @@ if (!function_exists('get_genre_id_for_mood')) {
                 $db_genre = $stmt->fetchColumn();
                 if ($db_genre) return (int)$db_genre;
             } catch (Exception $e) {}
+        }
+
+        // --- 2. AI SYNC PROTOCOL (SECONDARY) ---
+        // Fallback to Python AI service if DB mapping is missing
+        $python_api_url = 'http://127.0.0.1:5000/genre?mood=' . urlencode($mood);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $python_api_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Quick timeout for seamless fallback
+
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($http_code === 200 && $response) {
+            $data = json_decode($response, true);
+            if (isset($data['genre_id'])) {
+                return (int)$data['genre_id'];
+            }
         }
 
         // --- 3. LOCAL FALLBACK PROTOCOL (TERTIARY) ---
