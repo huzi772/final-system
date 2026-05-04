@@ -53,6 +53,14 @@ if ($input_type === 'text') {
         exit();
     }
 
+    // --- SECURITY: FILE SIZE LIMIT (10MB) ---
+    $max_audio_size = 10 * 1024 * 1024; // 10MB
+    if ($_FILES['audio_file']['size'] > $max_audio_size) {
+        http_response_code(413);
+        echo json_encode(['status' => 'error', 'message' => 'Audio file too large. Max limit is 10MB.']);
+        exit();
+    }
+
     $python_endpoint = '/detect/voice';
     $is_multipart = true;
 
@@ -73,6 +81,18 @@ if ($input_type === 'text') {
     }
 
     $base64_string = $_POST['image_data'];
+
+    // --- SECURITY: IMAGE SIZE LIMIT (5MB) ---
+    // Approximate base64 size calculation: (n * 3) / 4
+    $approx_size = (strlen($base64_string) * 3) / 4;
+    $max_image_size = 5 * 1024 * 1024; // 5MB
+
+    if ($approx_size > $max_image_size) {
+        http_response_code(413);
+        echo json_encode(['status' => 'error', 'message' => 'Image data too large. Max limit is 5MB.']);
+        exit();
+    }
+
     if (preg_match('/^data:image\/(\w+);base64,/', $base64_string, $matches)) {
         $base64_string = substr($base64_string, strpos($base64_string, ',') + 1);
         $type = strtolower($matches[1]);
