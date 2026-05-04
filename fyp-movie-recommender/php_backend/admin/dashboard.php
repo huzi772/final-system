@@ -2,21 +2,6 @@
 // admin/dashboard.php
 require_once 'include/header.php';
 
-// Safe database connection attempt
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
-
 $admin_username = $_SESSION['admin_username'] ?? 'Admin';
 
 // --- DATA FETCHING (with fallback for UI testing) ---
@@ -26,22 +11,17 @@ $total_users = 0;
 $total_moods = 0;
 $total_favorites = 0;
 
-if (isset($pdo)) {
+if ($pdo) {
     try {
         $total_users = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
         $total_moods = $pdo->query("SELECT COUNT(*) FROM user_mood_history")->fetchColumn();
         $total_favorites = $pdo->query("SELECT COUNT(*) FROM user_favorites")->fetchColumn();
     } catch (Exception $e) {}
-} else {
-    // Mock data for UI demo
-    $total_users = 1240;
-    $total_moods = 8562;
-    $total_favorites = 342;
 }
 
 // 2. Recent Activity
 $recent_activity = [];
-if (isset($pdo)) {
+if ($pdo) {
     try {
         $stmt = $pdo->query("SELECT h.mood, h.input_type, h.detected_at, u.username
                              FROM user_mood_history h
@@ -51,53 +31,37 @@ if (isset($pdo)) {
     } catch (Exception $e) {}
 }
 
-if (empty($recent_activity)) {
-    // Mock data for UI demo
-    $recent_activity = [
-        ['username' => 'Jules_01', 'mood' => 'Happy', 'input_type' => 'text', 'detected_at' => date('Y-m-d H:i:s')],
-        ['username' => 'Neo_Matrix', 'mood' => 'Excited', 'input_type' => 'voice', 'detected_at' => date('Y-m-d H:i:s', strtotime('-1 hour'))],
-        ['username' => 'Sarah_C', 'mood' => 'Sad', 'input_type' => 'face', 'detected_at' => date('Y-m-d H:i:s', strtotime('-2 hours'))],
-        ['username' => 'Alex_R', 'mood' => 'Angry', 'input_type' => 'text', 'detected_at' => date('Y-m-d H:i:s', strtotime('-5 hours'))],
-    ];
-}
-
 // 3. Top Moods Data (for Chart)
 $mood_data = [];
-if (isset($pdo)) {
+if ($pdo) {
     try {
         $mood_data = $pdo->query("SELECT mood, COUNT(*) as count FROM user_mood_history GROUP BY mood ORDER BY count DESC LIMIT 5")->fetchAll();
     } catch (Exception $e) {}
 }
 
-if (empty($mood_data)) {
-    $mood_data = [
-        ['mood' => 'Happy', 'count' => 450],
-        ['mood' => 'Sad', 'count' => 300],
-        ['mood' => 'Excited', 'count' => 250],
-        ['mood' => 'Angry', 'count' => 150],
-        ['mood' => 'Neutral', 'count' => 100],
-    ];
-}
-
 // 4. Input Method Trends (for Chart)
 $method_data = [];
-if (isset($pdo)) {
+if ($pdo) {
     try {
         $method_data = $pdo->query("SELECT input_type, COUNT(*) as count FROM user_mood_history GROUP BY input_type")->fetchAll();
     } catch (Exception $e) {}
 }
 
-if (empty($method_data)) {
-    $method_data = [
-        ['input_type' => 'text', 'count' => 1200],
-        ['input_type' => 'voice', 'count' => 800],
-        ['input_type' => 'face', 'count' => 500],
-    ];
-}
-
 ?>
 
 <main class="container">
+
+    <?php if (!$pdo): ?>
+        <div class="alert alert-danger rounded-4 mb-4 border-2 shadow-sm" role="alert" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545; color: #fff;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-danger"></i>
+                <div>
+                    <h5 class="alert-heading fw-800 mb-1">DATABASE OFFLINE</h5>
+                    <p class="mb-0 small opacity-75">The central neural database is unreachable. Some dashboard metrics may be unavailable. Error: <?php echo htmlspecialchars($db_error ?? 'Unknown connection error'); ?></p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <!-- Hero Section -->
     <section class="admin-hero-premium text-center" data-aos="zoom-in">
@@ -168,15 +132,48 @@ if (empty($method_data)) {
                 <div class="health-monitor py-2">
                     <div class="health-item">
                         <span class="health-label">Database Engine</span>
-                        <span class="health-status status-ok">OPTIMAL</span>
+                        <span class="health-status <?php echo $pdo ? 'status-ok' : 'text-danger'; ?>">
+                            <?php echo $pdo ? 'OPTIMAL' : 'OFFLINE'; ?>
+                        </span>
                     </div>
                     <div class="health-item">
                         <span class="health-label">AI Backend (Python)</span>
-                        <span class="health-status status-ok">ONLINE</span>
+                        <?php
+                        $python_online = false;
+                        try {
+                            $ch = curl_init("http://localhost:5000/");
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+                            $res = curl_exec($ch);
+                            if ($res && strpos($res, 'MoodAI Python Backend') !== false) {
+                                $python_online = true;
+                            }
+                            curl_close($ch);
+                        } catch (Exception $e) {}
+                        ?>
+                        <span class="health-status <?php echo $python_online ? 'status-ok' : 'text-danger'; ?>">
+                            <?php echo $python_online ? 'ONLINE' : 'OFFLINE'; ?>
+                        </span>
                     </div>
                     <div class="health-item">
                         <span class="health-label">TMDB API Connection</span>
-                        <span class="health-status status-ok">STABLE</span>
+                        <?php
+                        $tmdb_online = false;
+                        try {
+                            $ch = curl_init("https://api.themoviedb.org/3/configuration?api_key=" . TMDB_API_KEY);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_TIMEOUT, 2);
+                            $res = curl_exec($ch);
+                            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                            if ($http_code === 200) {
+                                $tmdb_online = true;
+                            }
+                            curl_close($ch);
+                        } catch (Exception $e) {}
+                        ?>
+                        <span class="health-status <?php echo $tmdb_online ? 'status-ok' : 'text-danger'; ?>">
+                            <?php echo $tmdb_online ? 'STABLE' : 'UNSTABLE'; ?>
+                        </span>
                     </div>
                     <div class="health-item">
                         <span class="health-label">Server Memory</span>

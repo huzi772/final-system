@@ -2,21 +2,6 @@
 // admin/users.php
 require_once 'include/header.php';
 
-// Safe database connection attempt
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
-
 // Search and Filter Logic
 $search = $_GET['search'] ?? '';
 $status_filter = $_GET['status'] ?? '';
@@ -31,9 +16,6 @@ if ($pdo) {
         $stats['banned'] = $pdo->query("SELECT COUNT(*) FROM users WHERE status = 'banned'")->fetchColumn();
         $stats['new_today'] = $pdo->query("SELECT COUNT(*) FROM user_mood_history WHERE DATE(detected_at) = CURDATE()")->fetchColumn();
     } catch (Exception $e) {}
-} else {
-    // Mock for UI
-    $stats = ['total' => 1240, 'active' => 1232, 'banned' => 8, 'new_today' => 12];
 }
 
 // --- USER LIST DATA ---
@@ -56,20 +38,22 @@ if ($pdo) {
         $users = $stmt->fetchAll();
     } catch (Exception $e) {}
 }
-
-if (empty($users) && empty($search) && empty($status_filter)) {
-    // Mock users
-    $users = [
-        ['user_id' => 1, 'username' => 'Jules_01', 'email' => 'jules@example.com', 'status' => 'active', 'created_at' => '2026-04-29 10:00:00'],
-        ['user_id' => 2, 'username' => 'Neo_Matrix', 'email' => 'neo@zion.net', 'status' => 'active', 'created_at' => '2026-04-28 15:30:00'],
-        ['user_id' => 3, 'username' => 'Sarah_C', 'email' => 'sarah@resistance.com', 'status' => 'active', 'created_at' => '2026-04-27 09:15:00'],
-        ['user_id' => 4, 'username' => 'Cipher_00', 'email' => 'traitor@matrix.com', 'status' => 'banned', 'created_at' => '2026-04-25 11:20:00'],
-    ];
-}
 ?>
 
 <main class="container">
     <!-- Header Section -->
+    <?php if (!$pdo): ?>
+        <div class="alert alert-danger rounded-4 mb-4 border-2 shadow-sm" role="alert" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545; color: #fff;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-danger"></i>
+                <div>
+                    <h5 class="alert-heading fw-800 mb-1">DATABASE OFFLINE</h5>
+                    <p class="mb-0 small opacity-75">The central neural database is unreachable. Operative registry cannot be synchronized. Error: <?php echo htmlspecialchars($db_error ?? 'Unknown connection error'); ?></p>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
     <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-down">
         <div>
             <h2 class="fw-800 mb-0 text-white">User Registry</h2>

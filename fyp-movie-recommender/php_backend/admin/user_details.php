@@ -4,21 +4,6 @@ require_once 'include/header.php';
 
 $user_id = $_GET['id'] ?? 0;
 
-// Safe database connection attempt
-$pdo = null;
-if (file_exists('../database/connection.php')) {
-    try {
-        $pdo = new PDO(
-            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-            DB_USER,
-            DB_PASS,
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
-    } catch (Throwable $t) {
-        $pdo = null;
-    }
-}
-
 // --- DATA FETCHING ---
 $user = null;
 $history = [];
@@ -45,22 +30,33 @@ if ($pdo && $user_id) {
     } catch (Exception $e) {}
 }
 
-// Mock data if user not found or for testing
-if (!$user) {
-    $user = ['username' => 'Jules_01', 'email' => 'jules@example.com', 'status' => 'active', 'created_at' => '2026-04-29 10:00:00'];
-    $history = [
-        ['mood' => 'Happy', 'input_type' => 'text', 'detected_at' => '2026-04-30 01:00:00'],
-        ['mood' => 'Excited', 'input_type' => 'voice', 'detected_at' => '2026-04-30 00:00:00'],
-        ['mood' => 'Sad', 'input_type' => 'face', 'detected_at' => '2026-04-29 23:00:00'],
-    ];
-    $favorites = [
-        ['movie_title' => 'Inception', 'movie_poster' => 'https://image.tmdb.org/t/p/w500/9gk7Fn9sVAsS9Te6B1pU3O9SB34.jpg', 'mood_tag' => 'Excited', 'saved_at' => '2026-04-29 23:10:00'],
-        ['movie_title' => 'The Hangover', 'movie_poster' => 'https://image.tmdb.org/t/p/w500/ul689Y96L77p6S9vI9P96pA20S.jpg', 'mood_tag' => 'Happy', 'saved_at' => '2026-04-29 23:15:00'],
-    ];
-}
 ?>
 
 <main class="container pb-5">
+    <?php if (!$pdo): ?>
+        <div class="alert alert-danger rounded-4 mb-4 border-2 shadow-sm" role="alert" style="background: rgba(220, 53, 69, 0.1); border-color: #dc3545; color: #fff;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill fs-3 me-3 text-danger"></i>
+                <div>
+                    <h5 class="alert-heading fw-800 mb-1">DATABASE OFFLINE</h5>
+                    <p class="mb-0 small opacity-75">The central neural database is unreachable. Error: <?php echo htmlspecialchars($db_error ?? 'Unknown connection error'); ?></p>
+                </div>
+            </div>
+        </div>
+    <?php elseif (!$user): ?>
+        <div class="alert alert-warning rounded-4 mb-4 border-2 shadow-sm" role="alert" style="background: rgba(255, 193, 7, 0.1); border-color: #ffc107; color: #fff;">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-person-exclamation fs-3 me-3 text-warning"></i>
+                <div>
+                    <h5 class="alert-heading fw-800 mb-1">OPERATIVE NOT FOUND</h5>
+                    <p class="mb-0 small opacity-75">The requested neural identity (ID: <?php echo htmlspecialchars($user_id); ?>) does not exist in the registry.</p>
+                </div>
+            </div>
+        </div>
+        <a href="user.php" class="btn btn-outline-light rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i>Return to Registry</a>
+        <?php exit(); ?>
+    <?php endif; ?>
+
     <!-- Header with Back Button -->
     <div class="d-flex align-items-center mb-5" data-aos="fade-right">
         <a href="user.php" class="back-btn-neural me-4">
@@ -81,7 +77,7 @@ if (!$user) {
                 </div>
                 <h3 class="fw-800 mb-1"><?php echo htmlspecialchars($user['username']); ?></h3>
                 <p class="text-muted small mb-3"><?php echo htmlspecialchars($user['email']); ?></p>
-                
+
                 <div class="status-indicator-large mb-4">
                     <?php if ($user['status'] == 'active'): ?>
                         <span class="badge bg-success w-100 py-2 rounded-pill">ACCESS GRANTED</span>

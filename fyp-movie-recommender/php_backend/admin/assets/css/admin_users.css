@@ -22,7 +22,6 @@
     font-family: var(--admin-font-tech);
 }
 
-.text-purple { color: var(--admin-purple) !important; }
 
 /* Status Badges Refinement */
 .badge.bg-success-subtle {
@@ -81,11 +80,3 @@
     background: transparent !important;
 }
 
-/* FIX: Input text remains visible and background remains dark */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
-    -webkit-text-fill-color: white !important;
-}

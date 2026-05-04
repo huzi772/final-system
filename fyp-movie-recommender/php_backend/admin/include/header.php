@@ -1,7 +1,7 @@
 <?php
 // admin/includes/header.php
 require_once __DIR__ . '/auth_check.php';
-require_once __DIR__ . '/../../includes/config.php';
+require_once __DIR__ . '/../../database/connection.php';
 
 $admin_username = $_SESSION['admin_username'] ?? 'Admin';
 ?>

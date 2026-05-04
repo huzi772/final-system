@@ -130,19 +130,7 @@
 .health-status { font-size: 0.75rem; font-weight: 800; }
 .status-ok { color: #22c55e; }
 
-/* --- METHOD BADGES --- */
-.badge-text { background: rgba(168, 144, 254, 0.1); color: var(--admin-purple); border: 1px solid rgba(168, 144, 254, 0.3); }
-.badge-voice { background: rgba(179, 136, 255, 0.1); color: #b388ff; border: 1px solid rgba(179, 136, 255, 0.3); }
-.badge-face { background: rgba(255, 152, 0, 0.1); color: #ff9800; border: 1px solid rgba(255, 152, 0, 0.3); }
 
-/* Ensure table text remains visible on light table bodies if any persist */
-.admin-table tbody td {
-    color: var(--admin-text-primary) !important;
-}
-
-.admin-table thead th {
-    color: var(--admin-purple) !important;
-}
 
 @keyframes blink {
     0% { opacity: 1; }
