@@ -9,18 +9,25 @@ except ImportError:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     from services.db_service import query_mapping_from_db, query_all_mappings_from_db
 
+import json
+
 # SECONDARY FALLBACK MAP
-# Used if Database is unreachable or mood not found in DB
-MOOD_GENRE_MAP = {
-    'Happy': 35,      # Comedy
-    'Sad': 18,        # Drama
-    'Angry': 28,      # Action
-    'Excited': 10751, # Family
-    'Anxious': 53,    # Thriller
-    'Relaxed': 10749, # Romance
-    'Neutral': 10752, # War/Documentary
-    'Default': 35
-}
+# Centralized fallback mapping from JSON
+def load_fallback_map():
+    fallback_path = os.path.join(os.path.dirname(__file__), '..', '..', 'database', 'mood_genre_fallback.json')
+    default_map = {
+        'Happy': 35, 'Sad': 18, 'Angry': 28, 'Excited': 10751,
+        'Anxious': 53, 'Relaxed': 10749, 'Neutral': 10752, 'Default': 35
+    }
+    if os.path.exists(fallback_path):
+        try:
+            with open(fallback_path, 'r') as f:
+                return json.load(f)
+        except:
+            pass
+    return default_map
+
+MOOD_GENRE_MAP = load_fallback_map()
 
 def get_genre_for_mood(mood):
     """

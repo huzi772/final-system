@@ -1,7 +1,7 @@
 <?php
 /**
  * mood_mapper.php - Centralized Mood-to-Genre Mapping Protocol
- * 
+ *
  * Provides a unified way to map detected moods to TMDB Genre IDs.
  * Always attempts to query the Python AI service first to ensure the
  * AI's logic is the source of truth, with a local fallback.
@@ -50,17 +50,17 @@ if (!function_exists('get_genre_id_for_mood')) {
         }
 
         // --- 3. LOCAL FALLBACK PROTOCOL (TERTIARY) ---
-        // Synchronized with python_ai_backend/services/mood_to_genre.py
+        // Centralized fallback mapping from JSON
+        $fallback_json = __DIR__ . '/../../database/mood_genre_fallback.json';
         $fallback_map = [
-            'Happy'    => 35,      // Comedy
-            'Sad'      => 18,      // Drama
-            'Angry'    => 28,      // Action
-            'Excited'  => 10751,   // Family
-            'Anxious'  => 53,      // Thriller
-            'Relaxed'  => 10749,   // Romance
-            'Neutral'  => 10752,   // War
-            'Default'  => 35       // Comedy
+            'Happy' => 35, 'Sad' => 18, 'Angry' => 28, 'Excited' => 10751,
+            'Anxious' => 53, 'Relaxed' => 10749, 'Neutral' => 10752, 'Default' => 35
         ];
+
+        if (file_exists($fallback_json)) {
+            $json_data = json_decode(file_get_contents($fallback_json), true);
+            if ($json_data) $fallback_map = $json_data;
+        }
 
         $mood_key = ucfirst(strtolower($mood));
         return $fallback_map[$mood_key] ?? $fallback_map['Default'];
