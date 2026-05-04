@@ -9,6 +9,7 @@ session_start();
 require_once 'includes/config.php';
 require_once 'database/connection.php'; // Needed for local cache
 require_once 'includes/mood_mapper.php'; // Central Mapper
+require_once 'includes/tmdb_helper.php'; // TMDB Helper
 
 // --- Session Check & Access Control ---
 $user_id = $_SESSION['user_id'] ?? null;
@@ -28,56 +29,15 @@ $recommended_movies = [];
 $api_error = null;
 $data_source = "Live Cloud";
 
-// --- CALL TMDB API ---
-$endpoint = TMDB_BASE_URL . 'discover/movie';
-$params = [
-    'api_key' => TMDB_API_KEY,
-    'with_genres' => $target_genre_id,
-    'sort_by' => $current_sort,
-    'language' => 'en-US',
-    'page' => 1,
-    'include_adult' => 'false'
-];
+// --- CALL TMDB API VIA HELPER ---
+$api_result = fetch_movies_from_tmdb($target_genre_id, $current_region, $current_sort);
 
-// Region Filtering Logic
-if ($current_region === 'Bollywood') {
-    $params['with_original_language'] = 'hi';
-} elseif ($current_region === 'South Indian') {
-    // TMDB uses 'te' (Telugu), 'ta' (Tamil), 'kn' (Kannada), 'ml' (Malayalam) for South Indian languages
-    $params['with_original_language'] = 'te|ta|kn|ml';
-} elseif ($current_region === 'International') {
-    $params['without_original_language'] = 'en|hi';
-} else {
-    $params['with_original_language'] = 'en';
-}
-
-$query_url = $endpoint . '?' . http_build_query($params);
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $query_url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-
-$response = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-if ($http_code === 200 && $response) {
-    $data = json_decode($response, true);
-    $results = $data['results'] ?? [];
+if ($api_result['success']) {
+    $results = $api_result['data']['results'] ?? [];
 
     foreach ($results as $movie) {
-        $poster_path = !empty($movie['poster_path'])
-            ? 'https://image.tmdb.org/t/p/w500' . $movie['poster_path']
-            : 'assets/img/no_poster.jpg';
-
-        $recommended_movies[] = [
-            'id' => $movie['id'],
-            'title' => $movie['title'],
-            'vote_average' => $movie['vote_average'],
-            'overview' => $movie['overview'],
-            'poster_path' => $poster_path
-        ];
+        $formatted_movie = format_movie_data($movie);
+        $recommended_movies[] = $formatted_movie;
 
         // --- CACHE UPDATE LOGIC ---
         try {
@@ -94,11 +54,11 @@ if ($http_code === 200 && $response) {
             if ($current_region === 'Bollywood') $lang = 'hi';
             
             $stmt->execute([
-                $movie['id'], 
-                $movie['title'], 
-                $movie['overview'], 
-                $poster_path, 
-                $movie['vote_average'], 
+                $formatted_movie['id'],
+                $formatted_movie['title'],
+                $formatted_movie['overview'],
+                $formatted_movie['poster_path'],
+                $formatted_movie['vote_average'],
                 $target_genre_id,
                 $lang
             ]);

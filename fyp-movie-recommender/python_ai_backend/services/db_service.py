@@ -1,41 +1,18 @@
 import mysql.connector
 from mysql.connector import Error
 import os
+from dotenv import load_dotenv
 
-# Function to parse PHP config for database credentials
-def get_db_config_from_php():
-    """
-    Attempts to read DB credentials from the PHP config file.
-    """
-    config_path = os.path.join(os.path.dirname(__file__), '..', '..', 'php_backend', 'includes', 'config.php')
-    config = {
-        'host': 'localhost',
-        'database': 'mood_recommender_db',
-        'user': 'root',
-        'password': ''
-    }
+# Load environment variables from .env file
+load_dotenv()
 
-    if os.path.exists(config_path):
-        try:
-            with open(config_path, 'r') as f:
-                content = f.read()
-                import re
-                # Simple regex to extract define('NAME', 'VALUE')
-                host = re.search(r"define\s*\(\s*['\"]DB_HOST['\"]\s*,\s*['\"](.*?)['\"]\s*\)", content)
-                name = re.search(r"define\s*\(\s*['\"]DB_NAME['\"]\s*,\s*['\"](.*?)['\"]\s*\)", content)
-                user = re.search(r"define\s*\(\s*['\"]DB_USER['\"]\s*,\s*['\"](.*?)['\"]\s*\)", content)
-                pw = re.search(r"define\s*\(\s*['\"]DB_PASS['\"]\s*,\s*['\"](.*?)['\"]\s*\)", content)
-
-                if host: config['host'] = host.group(1)
-                if name: config['database'] = name.group(1)
-                if user: config['user'] = user.group(1)
-                if pw: config['password'] = pw.group(1)
-        except Exception as e:
-            print(f"Warning: Could not parse PHP config: {e}")
-
-    return config
-
-DB_CONFIG = get_db_config_from_php()
+# Get DB config from environment variables
+DB_CONFIG = {
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'database': os.getenv('DB_NAME', 'mood_recommender_db'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASS', '')
+}
 
 def get_db_connection():
     """
@@ -52,6 +29,7 @@ def get_db_connection():
             return connection
     except Error as e:
         # Avoid flooding logs if DB is not available
+        print(f"Database connection error: {e}")
         return None
 
 def query_mapping_from_db(mood_name):
@@ -75,7 +53,7 @@ def query_mapping_from_db(mood_name):
     finally:
         if cursor:
             cursor.close()
-        if connection.is_connected():
+        if connection.is_connected() if connection else False:
             connection.close()
 
 def query_all_mappings_from_db():
@@ -105,5 +83,5 @@ def query_all_mappings_from_db():
     finally:
         if cursor:
             cursor.close()
-        if connection.is_connected():
+        if connection.is_connected() if connection else False:
             connection.close()
