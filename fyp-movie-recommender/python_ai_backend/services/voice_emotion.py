@@ -67,10 +67,7 @@ def detect_voice_mood(audio_file_path):
                 tone_mood = "Angry"
             tone_intensity = min(1.0, energy_mean * 15)
         elif energy_mean < 0.015: # Lowered from 0.02 to be more specific
-            if centroid_mean < 1200:
-                tone_mood = "Sad"
-            else:
-                tone_mood = "Relaxed" # Low energy but not deep/sad
+            tone_mood = "Sad"
             tone_intensity = min(1.0, (0.015 - energy_mean) * 60)
         else:
             tone_mood = "Neutral"
@@ -88,8 +85,6 @@ def detect_voice_mood(audio_file_path):
                 final_mood = "Angry"
             elif text_mood == "Sad" and tone_mood == "Excited":
                 final_mood = "Excited"
-            elif text_mood == "Neutral" and tone_mood == "Relaxed":
-                final_mood = "Relaxed"
 
         # Combined Scores
         combined_scores = text_scores.copy()

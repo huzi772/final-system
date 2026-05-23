@@ -81,7 +81,7 @@ def detect_face_mood(image_data):
             "sad": "Sad",
             "angry": "Angry",
             "disgust": "Angry", # Map disgust to Angry
-            "fear": "Anxious",  # or Sad/Angry depending on preference
+            "fear": "Neutral",  # Map fear to Neutral
             "surprise": "Excited",
             "neutral": "Neutral"
         }
