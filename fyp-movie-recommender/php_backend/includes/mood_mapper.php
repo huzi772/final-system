@@ -55,7 +55,7 @@ if (!function_exists('get_genre_id_for_mood')) {
         $fallback_json = __DIR__ . '/../../database/mood_genre_fallback.json';
         $fallback_map = [
             'Happy' => 35, 'Sad' => 18, 'Angry' => 28, 'Excited' => 10751,
-            'Anxious' => 53, 'Relaxed' => 10749, 'Neutral' => 10752, 'Default' => 35
+            'Neutral' => 10752, 'Default' => 35
         ];
 
         if (file_exists($fallback_json)) {

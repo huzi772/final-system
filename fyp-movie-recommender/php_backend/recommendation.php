@@ -104,13 +104,11 @@ $mood_visuals = [
     'Sad'      => ['icon' => 'bi-emoji-frown-fill', 'color' => '#4A90E2', 'tag' => 'Emotional Depth'],
     'Angry'    => ['icon' => 'bi-emoji-angry-fill', 'color' => '#FF4B2B', 'tag' => 'High Intensity'],
     'Excited'  => ['icon' => 'bi-emoji-laughing-fill', 'color' => '#FF8C00', 'tag' => 'Pure Joy'],
-    'Anxious'  => ['icon' => 'bi-emoji-expressionless-fill', 'color' => '#A9A9A9', 'tag' => 'Neural Tension'],
-    'Relaxed'  => ['icon' => 'bi-emoji-sunglasses-fill', 'color' => '#50C878', 'tag' => 'Calm Waves'],
     'Neutral'  => ['icon' => 'bi-emoji-neutral-fill', 'color' => '#FFFFFF', 'tag' => 'Balanced Vibe'],
     'Default'  => ['icon' => 'bi-emoji-smile-fill', 'color' => '#FF0000', 'tag' => 'System Analysis']
 ];
 
-$visual = $mood_visuals[ucfirst(strtolower($last_detected_mood))] ?? $mood_visuals['Default'];
+$visual = $mood_visuals[ucfirst(strtolower($last_detected_mood))] ?? ($mood_visuals['Default'] ?? ['icon' => 'bi-emoji-smile-fill', 'color' => '#FF0000', 'tag' => 'System Analysis']);
 
 // --- Include UI Components ---
 require_once 'includes/header.php';
