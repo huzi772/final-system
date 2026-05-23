@@ -78,17 +78,6 @@ EXCITED_WORDS = {
     "bounce": 1.0, "joyous": 1.8, "ecstasy": 2.0, "revved": 1.5, "sparkle": 1.2,
     "giddy": 1.5, "euphoric": 2.0, "animate": 1.2
 }
-ANXIOUS_WORDS = {
-    "anxious": 1.5, "nervous": 1.5, "worried": 1.5, "worry": 1.5, "scared": 1.5,
-    "afraid": 1.5, "fear": 1.8, "panic": 2.0, "dread": 2.0, "tense": 1.2,
-    "uneasy": 1.2, "restless": 1.2, "apprehensive": 1.5, "frightened": 1.8,
-    "terrified": 2.0, "shaking": 1.2, "sweating": 1.0, "hesitant": 1.0
-}
-RELAXED_WORDS = {
-    "relaxed": 1.5, "calm": 1.5, "peaceful": 1.5, "serene": 1.5, "tranquil": 1.8,
-    "chill": 1.2, "easy": 1.0, "quiet": 1.0, "still": 1.0, "mellow": 1.2,
-    "composed": 1.2, "untroubled": 1.5, "carefree": 1.5
-}
 
 # --- CONFIGURATION: IDIOMS (Priority Phrases) ---
 IDIOMS = {
@@ -127,11 +116,11 @@ def detect_mood_level2(text):
     if has_exclamation: global_intensity += 0.2
     if is_all_caps: global_intensity += 0.3
 
-    mood_scores = {"Happy": 0.0, "Sad": 0.0, "Angry": 0.0, "Excited": 0.0, "Anxious": 0.0, "Relaxed": 0.0}
+    mood_scores = {"Happy": 0.0, "Sad": 0.0, "Angry": 0.0, "Excited": 0.0}
 
     # 2. Idiom Matching (Priority)
     for idiom, (mood, weight) in IDIOMS.items():
-        if idiom in text_lower:
+        if idiom in text_lower and mood in mood_scores:
             # Check for negation before the idiom
             # Find the position of the idiom
             idx = text_lower.find(idiom)
@@ -186,9 +175,7 @@ def detect_mood_level2(text):
             "Happy": HAPPY_WORDS,
             "Sad": SAD_WORDS,
             "Angry": ANGRY_WORDS,
-            "Excited": EXCITED_WORDS,
-            "Anxious": ANXIOUS_WORDS,
-            "Relaxed": RELAXED_WORDS
+            "Excited": EXCITED_WORDS
         }
 
         for mood_name, mood_dict in all_moods.items():

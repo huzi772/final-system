@@ -17,7 +17,7 @@ def load_fallback_map():
     fallback_path = os.path.join(os.path.dirname(__file__), '..', '..', 'database', 'mood_genre_fallback.json')
     default_map = {
         'Happy': 35, 'Sad': 18, 'Angry': 28, 'Excited': 10751,
-        'Anxious': 53, 'Relaxed': 10749, 'Neutral': 10752, 'Default': 35
+        'Neutral': 10752, 'Default': 35
     }
     if os.path.exists(fallback_path):
         try:

@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `system_settings` (
 
 -- Insert Initial Moods
 INSERT IGNORE INTO `mood_definitions` (`mood_name`) VALUES
-('Happy'), ('Sad'), ('Angry'), ('Excited'), ('Anxious'), ('Relaxed'), ('Neutral');
+('Happy'), ('Sad'), ('Angry'), ('Excited'), ('Neutral');
 
 -- Insert Initial Mappings
 INSERT IGNORE INTO `mood_genre_mapping` (`mood_id`, `mood_name`, `genre_id`, `genre_name`, `weight`) VALUES
@@ -61,9 +61,7 @@ INSERT IGNORE INTO `mood_genre_mapping` (`mood_id`, `mood_name`, `genre_id`, `ge
 (2, 'Sad', 18, 'Drama', 100),
 (3, 'Angry', 28, 'Action', 100),
 (4, 'Excited', 10751, 'Family', 100),
-(5, 'Anxious', 53, 'Thriller', 100),
-(6, 'Relaxed', 10749, 'Romance', 100),
-(7, 'Neutral', 10752, 'War', 100);
+(5, 'Neutral', 10752, 'War', 100);
 
 -- Insert Default Settings
 INSERT IGNORE INTO `system_settings` (`setting_key`, `setting_value`) VALUES
