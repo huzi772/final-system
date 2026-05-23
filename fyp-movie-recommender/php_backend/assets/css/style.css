@@ -518,6 +518,35 @@ main {
     color: var(--text-white);
 }
 
+/* --- Responsive Hero Text --- */
+@media (max-width: 992px) {
+    .hero-title-text {
+        font-size: 3rem !important;
+    }
+    .large-hero-icon {
+        font-size: 7rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title-text {
+        font-size: 2.2rem !important;
+    }
+    .large-hero-icon {
+        font-size: 5rem !important;
+    }
+    .hero-card {
+        border-radius: 30px !important;
+    }
+    .hero-card .p-5 {
+        padding: 2.5rem 1.5rem !important;
+    }
+    .btn-hero-primary, .btn-hero-outline {
+        padding: 10px 20px !important;
+        font-size: 0.85rem !important;
+    }
+}
+
 /* --- Hero Section (Shared) --- */
 .hero-section {
     padding: 40px 0;
