@@ -60,31 +60,24 @@ def detect_voice_mood(audio_file_path):
         tone_mood = "Neutral"
         tone_intensity = 0.0
 
-        if energy_mean > 0.04: # Slightly more sensitive than 0.05
-            if centroid_mean > 2400:
+        if energy_mean > 0.025:
+            if centroid_mean > 2000:
                 tone_mood = "Excited"
             else:
                 tone_mood = "Angry"
             tone_intensity = min(1.0, energy_mean * 15)
-        elif energy_mean < 0.015: # Lowered from 0.02 to be more specific
+        elif energy_mean < 0.020:
             tone_mood = "Sad"
-            tone_intensity = min(1.0, (0.015 - energy_mean) * 60)
+            tone_intensity = min(1.0, (0.020 - energy_mean) * 60)
         else:
             tone_mood = "Neutral"
 
         # --- C. Hybrid Decision Logic ---
         final_mood = text_mood
 
-        # Tone Override Logic
-        if tone_mood != "Neutral":
-            if text_mood == "Neutral":
-                final_mood = tone_mood
-            elif text_mood == "Happy" and tone_mood == "Sad":
-                final_mood = "Sad"
-            elif text_mood == "Happy" and tone_mood == "Angry":
-                final_mood = "Angry"
-            elif text_mood == "Sad" and tone_mood == "Excited":
-                final_mood = "Excited"
+        # Tone Override Logic (Text analysis is primary, Tone only overrides if text is Neutral)
+        if text_mood == "Neutral" and tone_mood != "Neutral":
+            final_mood = tone_mood
 
         # Combined Scores
         combined_scores = text_scores.copy()
